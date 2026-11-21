@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "songId": "alternate_test",
+  "notes": [
+    {"time": 2.0, "playerId": 1, "noteIndex": 6},
+    {"time": 2.0, "playerId": 2, "noteIndex": 1},
+    {"time": 2.7, "playerId": 1, "noteIndex": 5},
+    {"time": 2.7, "playerId": 2, "noteIndex": 2},
+    {"time": 3.4, "playerId": 1, "noteIndex": 4},
+    {"time": 3.4, "playerId": 2, "noteIndex": 3},
+    {"time": 4.1, "playerId": 1, "noteIndex": 3},
+    {"time": 4.1, "playerId": 2, "noteIndex": 4},
+    {"time": 4.8, "playerId": 1, "noteIndex": 2},
+    {"time": 4.8, "playerId": 2, "noteIndex": 5},
+    {"time": 5.5, "playerId": 1, "noteIndex": 1},
+    {"time": 5.5, "playerId": 2, "noteIndex": 6}
+  ]
+}

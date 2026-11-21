@@ -1,0 +1,496 @@
+{
+    "version":  1,
+    "songId":  "teye_sosbud_easy",
+    "notes":  [
+                  {
+                      "time":  12.7,
+                      "playerId":  1,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  12.7,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  13.2,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  13.7,
+                      "playerId":  1,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  13.7,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  14.266667,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  14.8,
+                      "playerId":  1,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  14.8,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  15.4,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  16,
+                      "playerId":  1,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  16,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  16.533333,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  17.1,
+                      "playerId":  1,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  17.1,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  17.666667,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  18.266667,
+                      "playerId":  1,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  18.266667,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  18.866667,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  19.433333,
+                      "playerId":  1,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  19.433333,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  20,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  20.6,
+                      "playerId":  1,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  20.6,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  21.166667,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  21.733333,
+                      "playerId":  1,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  21.733333,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  22.266667,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  22.766667,
+                      "playerId":  1,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  22.766667,
+                      "playerId":  2,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  23.366667,
+                      "playerId":  2,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  23.966667,
+                      "playerId":  1,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  23.966667,
+                      "playerId":  2,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  24.533333,
+                      "playerId":  2,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  25.133333,
+                      "playerId":  1,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  25.133333,
+                      "playerId":  2,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  25.666667,
+                      "playerId":  2,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  26.233333,
+                      "playerId":  1,
+                      "noteIndex":  4
+                  },
+                  {
+                      "time":  26.233333,
+                      "playerId":  2,
+                      "noteIndex":  4
+                  },
+                  {
+                      "time":  26.8,
+                      "playerId":  2,
+                      "noteIndex":  4
+                  },
+                  {
+                      "time":  27.333333,
+                      "playerId":  1,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  27.333333,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  27.933333,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  28.5,
+                      "playerId":  1,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  28.5,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  29.066667,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  29.666667,
+                      "playerId":  1,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  29.666667,
+                      "playerId":  2,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  30.2,
+                      "playerId":  2,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  30.766667,
+                      "playerId":  1,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  30.766667,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  31.333333,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  31.866667,
+                      "playerId":  1,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  31.866667,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  32.466667,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  33.066667,
+                      "playerId":  1,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  33.066667,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  33.633333,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  34.2,
+                      "playerId":  1,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  34.2,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  34.766667,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  35.333333,
+                      "playerId":  1,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  35.333333,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  35.9,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  36.466667,
+                      "playerId":  1,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  36.466667,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  37.066667,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  37.7,
+                      "playerId":  1,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  37.7,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  38.266667,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  38.8,
+                      "playerId":  1,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  38.8,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  39.366667,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  39.933333,
+                      "playerId":  1,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  39.933333,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  40.466667,
+                      "playerId":  2,
+                      "noteIndex":  3
+                  },
+                  {
+                      "time":  41.033333,
+                      "playerId":  1,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  41.033333,
+                      "playerId":  2,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  41.633333,
+                      "playerId":  2,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  42.233333,
+                      "playerId":  1,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  42.233333,
+                      "playerId":  2,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  42.8,
+                      "playerId":  2,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  43.333333,
+                      "playerId":  1,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  43.333333,
+                      "playerId":  2,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  43.9,
+                      "playerId":  2,
+                      "noteIndex":  5
+                  },
+                  {
+                      "time":  44.466667,
+                      "playerId":  1,
+                      "noteIndex":  4
+                  },
+                  {
+                      "time":  44.466667,
+                      "playerId":  2,
+                      "noteIndex":  4
+                  },
+                  {
+                      "time":  45.066667,
+                      "playerId":  2,
+                      "noteIndex":  4
+                  },
+                  {
+                      "time":  45.666667,
+                      "playerId":  1,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  45.666667,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  46.2,
+                      "playerId":  2,
+                      "noteIndex":  2
+                  },
+                  {
+                      "time":  46.766667,
+                      "playerId":  1,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  46.766667,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  47.366667,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  47.966667,
+                      "playerId":  1,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  47.966667,
+                      "playerId":  2,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  48.533333,
+                      "playerId":  2,
+                      "noteIndex":  6
+                  },
+                  {
+                      "time":  49.133333,
+                      "playerId":  1,
+                      "noteIndex":  1
+                  },
+                  {
+                      "time":  49.133333,
+                      "playerId":  2,
+                      "noteIndex":  1
+                  }
+              ]
+}

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4626aac1cde024443a8161cd3b615ad6, type: 3}
+  m_Name: DemoTest
+  m_EditorClassIdentifier: Assembly-CSharp::GamelanRhythm.SongData
+  songId: demo_test
+  title: Demo / Test
+  difficulty: Standard
+  audioClip: {fileID: 0}
+  chartJson: {fileID: 4900000, guid: 86da1c2f9e2d13b4a9ba37a941f29434, type: 3}
+  bpm: 120
+  chartAudioOffset: 0
+  noteTravelDuration: 2

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803618d0283bf8a409a837fc4e49d9e1, type: 3}
+  m_Name: SongDatabase
+  m_EditorClassIdentifier: Assembly-CSharp::GamelanRhythm.SongDatabase
+  songs:
+  - {fileID: 11400000, guid: 64273ef377325be4c91b53b49d8b59bc, type: 2}
+  - {fileID: 11400000, guid: ed4915dd26676d94aa00192d5fe30ff8, type: 2}
+  - {fileID: 11400000, guid: 3159b3ed2d326d5488631f66400f8cbf, type: 2}
+  - {fileID: 11400000, guid: f3981b69e08a80843b0134e30b093b6c, type: 2}
