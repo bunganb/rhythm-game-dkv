@@ -35,6 +35,14 @@ namespace GamelanRhythm
         [SerializeField] RectTransform songList;
         [SerializeField] Button songButtonTemplate;
         [SerializeField] TMP_Text countdownLabel, progressLabel, resultOne, resultTwo, errorLabel;
+        Animator parallaxAnimator;
+        CanvasGroup menuCanvasGroup, songsCanvasGroup;
+        Button parallaxClickArea;
+        Button authoredPlayButton, authoredExitButton;
+        bool usesAuthoredMenu;
+        bool parallaxDown, parallaxTransitioning;
+        const float ParallaxDuration = 1.25f;
+        const float ParallaxPageSwapTime = 0.28f;
         AudioSource music, effects, voice;
         double dspStart;
         double lastVoiceDsp = -100;
@@ -57,6 +65,7 @@ namespace GamelanRhythm
             music.playOnAwake = effects.playOnAwake = voice.playOnAwake = false;
             if (safeRoot == null) BuildUi();
             else BindSceneUi();
+            BindParallaxUi();
             BindButtons();
             Show(Page.Menu);
         }
@@ -83,25 +92,102 @@ namespace GamelanRhythm
 
         void BindButtons()
         {
-            Bind(menuPage, "Play", OpenSongs);
-            Bind(menuPage, "Exit", ExitGame);
+            if (usesAuthoredMenu)
+            {
+                var authoredCanvas = transform.Find("Game Canvas");
+                Bind(authoredCanvas.gameObject, "Play", OpenSongs);
+                Bind(authoredCanvas.gameObject, "Exit", ExitGame);
+            }
+            else
+            {
+                Bind(menuPage, "Play", OpenSongs);
+                Bind(menuPage, "Exit", ExitGame);
+            }
             Bind(songsPage, "Back", OpenMenu);
             Bind(setupPage, "Start", StartSong);
             Bind(setupPage, "Back", OpenSongs);
             Bind(resultsPage, "Replay", StartSong);
             Bind(resultsPage, "Menu", OpenMenu);
+            if (parallaxClickArea != null)
+            {
+                parallaxClickArea.onClick.RemoveListener(ScrollParallaxDown);
+                parallaxClickArea.onClick.AddListener(ScrollParallaxDown);
+            }
+        }
+
+        void BindParallaxUi()
+        {
+            if (safeRoot == null || safeRoot.parent == null) return;
+            var canvasRoot = safeRoot.parent;
+            var authoredCanvas = transform.Find("Game Canvas");
+            if (authoredCanvas != null) canvasRoot = authoredCanvas;
+            parallaxAnimator = canvasRoot.GetComponent<Animator>();
+            menuCanvasGroup = menuPage.GetComponent<CanvasGroup>();
+            songsCanvasGroup = songsPage.GetComponent<CanvasGroup>();
+            var clickArea = canvasRoot.Find("Parallax Click Area");
+            if (clickArea != null) parallaxClickArea = clickArea.GetComponent<Button>();
+            if (usesAuthoredMenu)
+            {
+                var play = FindNamed(canvasRoot, "Play");
+                var exit = FindNamed(canvasRoot, "Exit");
+                authoredPlayButton = play != null ? play.GetComponent<Button>() : null;
+                authoredExitButton = exit != null ? exit.GetComponent<Button>() : null;
+            }
+            if (parallaxAnimator != null) parallaxAnimator.Rebind();
+        }
+
+        static Transform FindNamed(Transform root, string name)
+        {
+            if (root == null) return null;
+            if (root.name == name) return root;
+            for (int i = 0; i < root.childCount; i++)
+            {
+                var found = FindNamed(root.GetChild(i), name);
+                if (found != null) return found;
+            }
+            return null;
         }
 
         static void Bind(GameObject pageRoot, string buttonName, Action action)
         {
-            var button = pageRoot.transform.Find(buttonName).GetComponent<Button>();
+            var target = FindNamed(pageRoot.transform, buttonName);
+            if (target == null) return;
+            var button = target.GetComponent<Button>();
+            if (button == null) return;
             if (button.onClick.GetPersistentEventCount() > 0) return;
             button.onClick.RemoveAllListeners();
             button.onClick.AddListener(() => action());
         }
 
-        public void OpenMenu() => Show(Page.Menu);
-        public void ExitGame() => Application.Quit();
+        public void OpenMenu()
+        {
+            if (parallaxTransitioning) return;
+            if (parallaxAnimator != null && parallaxDown)
+            {
+                parallaxTransitioning = true;
+                SetParallaxButtonsInteractable(false);
+                parallaxAnimator.SetTrigger("SlideTop");
+                StartCoroutine(FinishReturnToTop());
+                return;
+            }
+            Show(Page.Menu);
+            RefreshParallaxClickArea();
+        }
+        public void ExitGame()
+        {
+            // The menu's EXIT button also serves as the way back from the scrolled layout.
+            if (parallaxDown)
+            {
+                OpenMenu();
+                return;
+            }
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+        }
 
         void Update()
         {
@@ -155,18 +241,30 @@ namespace GamelanRhythm
 
         void BuildUi()
         {
-            var canvasGo = new GameObject("Game Canvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-            canvasGo.transform.SetParent(transform, false);
+            var canvasGo = transform.Find("Game Canvas")?.gameObject;
+            usesAuthoredMenu = canvasGo != null && FindNamed(canvasGo.transform, "Play") != null && FindNamed(canvasGo.transform, "Exit") != null;
+            if (canvasGo == null)
+            {
+                canvasGo = new GameObject("Game Canvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
+                canvasGo.transform.SetParent(transform, false);
+            }
             var canvas = canvasGo.GetComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            if (canvas != null) canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             var scaler = canvasGo.GetComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1920, 1080);
-            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            scaler.matchWidthOrHeight = 0.5f;
-            Image fill = Ui.Image(canvasGo.transform, "Background", Background, Vector2.zero, Vector2.one);
-            fill.raycastTarget = false;
-            safeRoot = Ui.Rect(canvasGo.transform, "Safe Area", Vector2.zero, Vector2.one);
+            if (scaler != null)
+            {
+                scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                scaler.referenceResolution = new Vector2(1920, 1080);
+                scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+                scaler.matchWidthOrHeight = 0.5f;
+            }
+            if (!usesAuthoredMenu)
+            {
+                Image fill = Ui.Image(canvasGo.transform, "Background", Background, Vector2.zero, Vector2.one);
+                fill.raycastTarget = false;
+            }
+            safeRoot = FindNamed(canvasGo.transform, "Safe Area") as RectTransform;
+            if (safeRoot == null) safeRoot = Ui.Rect(canvasGo.transform, "Safe Area", Vector2.zero, Vector2.one);
             ApplySafeArea();
             if (FindFirstObjectByType<EventSystem>() == null)
             {
@@ -174,7 +272,14 @@ namespace GamelanRhythm
                 eventGo.transform.SetParent(transform, false);
                 eventGo.AddComponent<InputSystemUIInputModule>().AssignDefaultActions();
             }
-            menuPage = BuildMenu();
+            if (usesAuthoredMenu)
+            {
+                var menu = safeRoot.Find("Main Menu");
+                if (menu == null) menu = Ui.Rect(safeRoot, "Main Menu", Vector2.zero, Vector2.one);
+                menuPage = menu.gameObject;
+                if (menuPage.GetComponent<CanvasGroup>() == null) menuPage.AddComponent<CanvasGroup>();
+            }
+            else menuPage = BuildMenu();
             songsPage = BuildSongs();
             setupPage = BuildSetup();
             playPage = BuildPlay();
@@ -207,14 +312,15 @@ namespace GamelanRhythm
 
         GameObject BuildSongs()
         {
-            var root = Ui.Rect(safeRoot, "Song Selection", Vector2.zero, Vector2.one).gameObject;
+            var existing = safeRoot.Find("Song Selection");
+            var root = existing != null ? existing.gameObject : Ui.Rect(safeRoot, "Song Selection", Vector2.zero, Vector2.one).gameObject;
             Ui.Text(root.transform, "Title", "SELECT A SONG", 56, Gold, TextAlignmentOptions.Center,
                 new Vector2(0.1f, 0.78f), new Vector2(0.9f, 0.92f));
             songList = Ui.Rect(root.transform, "Song List", new Vector2(0.22f, 0.21f), new Vector2(0.78f, 0.75f));
             songButtonTemplate = Ui.Button(songList, "Song Entry Template", "SONG", new Vector2(0, 0.84f),
                 new Vector2(1, 1), PanelColor, null);
             songButtonTemplate.gameObject.SetActive(false);
-            Ui.Button(root.transform, "Back", "BACK", new Vector2(0.03f, 0.04f), new Vector2(0.18f, 0.15f), PanelColor, () => Show(Page.Menu));
+            Ui.Button(root.transform, "Back", "EXIT", new Vector2(0.03f, 0.04f), new Vector2(0.18f, 0.15f), PanelColor, () => Show(Page.Menu));
             return root;
         }
 
@@ -267,9 +373,25 @@ namespace GamelanRhythm
             resultsPage.SetActive(next == Page.Results);
             if (next != Page.Playing) music.Stop();
             errorLabel.text = "";
+            RefreshParallaxClickArea();
         }
 
         public void OpenSongs()
+        {
+            if (parallaxTransitioning) return;
+            if (parallaxAnimator != null && page == Page.Menu)
+            {
+                parallaxTransitioning = true;
+                SetParallaxButtonsInteractable(false);
+                OpenSongsNow();
+                parallaxAnimator.SetTrigger("OpenSongs");
+                StartCoroutine(FinishOpenSongs());
+                return;
+            }
+            OpenSongsNow();
+        }
+
+        void OpenSongsNow()
         {
             foreach (Transform child in songList)
                 if (child != songButtonTemplate.transform) Destroy(child.gameObject);
@@ -299,6 +421,69 @@ namespace GamelanRhythm
                 if (!valid) Debug.LogError(validationError, song);
             }
             Show(Page.Songs);
+        }
+
+        public void ScrollParallaxDown()
+        {
+            if (parallaxAnimator == null || page != Page.Menu || parallaxDown || parallaxTransitioning) return;
+            parallaxTransitioning = true;
+            SetParallaxButtonsInteractable(false);
+            if (parallaxClickArea != null) parallaxClickArea.gameObject.SetActive(false);
+            parallaxAnimator.SetTrigger("SlideDown");
+            StartCoroutine(FinishScrollDown());
+        }
+
+        IEnumerator FinishScrollDown()
+        {
+            yield return new WaitForSecondsRealtime(ParallaxDuration);
+            parallaxDown = true;
+            parallaxTransitioning = false;
+            if (menuCanvasGroup != null) menuCanvasGroup.interactable = true;
+            if (songsCanvasGroup != null) songsCanvasGroup.interactable = false;
+            if (authoredPlayButton != null) authoredPlayButton.interactable = true;
+            if (authoredExitButton != null) authoredExitButton.interactable = true;
+            RefreshParallaxClickArea();
+        }
+
+        IEnumerator FinishOpenSongs()
+        {
+            yield return new WaitForSecondsRealtime(ParallaxDuration);
+            parallaxDown = true;
+            parallaxTransitioning = false;
+            if (menuCanvasGroup != null) menuCanvasGroup.interactable = false;
+            if (songsCanvasGroup != null) songsCanvasGroup.interactable = true;
+            if (authoredPlayButton != null) authoredPlayButton.interactable = false;
+            if (authoredExitButton != null) authoredExitButton.interactable = false;
+            RefreshParallaxClickArea();
+        }
+
+        IEnumerator FinishReturnToTop()
+        {
+            yield return new WaitForSecondsRealtime(ParallaxPageSwapTime);
+            Show(Page.Menu);
+
+            yield return new WaitForSecondsRealtime(ParallaxDuration - ParallaxPageSwapTime);
+            parallaxDown = false;
+            parallaxTransitioning = false;
+            if (menuCanvasGroup != null) menuCanvasGroup.interactable = true;
+            if (songsCanvasGroup != null) songsCanvasGroup.interactable = false;
+            if (authoredPlayButton != null) authoredPlayButton.interactable = true;
+            if (authoredExitButton != null) authoredExitButton.interactable = true;
+            RefreshParallaxClickArea();
+        }
+
+        void SetParallaxButtonsInteractable(bool interactable)
+        {
+            if (menuCanvasGroup != null) menuCanvasGroup.interactable = interactable;
+            if (songsCanvasGroup != null) songsCanvasGroup.interactable = interactable;
+            if (authoredPlayButton != null) authoredPlayButton.interactable = interactable;
+            if (authoredExitButton != null) authoredExitButton.interactable = interactable;
+        }
+
+        void RefreshParallaxClickArea()
+        {
+            if (parallaxClickArea != null)
+                parallaxClickArea.gameObject.SetActive(page == Page.Menu && !parallaxTransitioning);
         }
 
         public void StartSong()
