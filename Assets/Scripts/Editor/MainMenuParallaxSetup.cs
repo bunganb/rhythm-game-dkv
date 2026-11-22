@@ -5,7 +5,6 @@ using UnityEditor.Animations;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
-using GamelanRhythm;
 
 public static class MainMenuParallaxSetup
 {
@@ -32,8 +31,6 @@ public static class MainMenuParallaxSetup
         var safeArea = canvas.transform.Find("Safe Area") ?? start.Find("Safe Area");
         if (safeArea == null) safeArea = EnsureUiRoot(start, "Safe Area");
         ConfigureStartGroup(canvas.transform, start, safeArea);
-        if (start.GetComponent<MainMenuMouseParallax>() == null)
-            Undo.AddComponent<MainMenuMouseParallax>(start.gameObject);
         var mainMenu = EnsureUiRoot(safeArea, "Main Menu");
         var songSelection = EnsureUiRoot(safeArea, "Song Selection");
         mainMenu.gameObject.SetActive(true);
