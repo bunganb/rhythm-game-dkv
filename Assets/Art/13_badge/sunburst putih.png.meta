@@ -1,0 +1,572 @@
+fileFormatVersion: 2
+guid: 75ecbd77d19364b4aab66fc6e5bee121
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6607185241796851300
+    second: sunburst putih_0
+  - first:
+      213: 4627775354819805548
+    second: sunburst putih_1
+  - first:
+      213: -7150673253699944197
+    second: sunburst putih_2
+  - first:
+      213: -3970931434361590315
+    second: sunburst putih_3
+  - first:
+      213: 4208361338151143787
+    second: sunburst putih_4
+  - first:
+      213: -1054308762176069866
+    second: sunburst putih_5
+  - first:
+      213: -3341144112373422227
+    second: sunburst putih_6
+  - first:
+      213: 8201656225332830324
+    second: sunburst putih_7
+  - first:
+      213: 3701763378576810985
+    second: sunburst putih_8
+  - first:
+      213: 8127022234057670745
+    second: sunburst putih_9
+  - first:
+      213: 5418151884034269081
+    second: sunburst putih_10
+  - first:
+      213: -7586269166090205947
+    second: sunburst putih_11
+  - first:
+      213: 1114835964759041493
+    second: sunburst putih_12
+  - first:
+      213: 1344337514591029829
+    second: sunburst putih_13
+  - first:
+      213: -1414812259830164330
+    second: sunburst putih_14
+  - first:
+      213: -7738544010923683633
+    second: sunburst putih_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: sunburst putih_0
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 855
+        width: 516
+        height: 348
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c99ce7967009e44a0800000000000000
+      internalID: -6607185241796851300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_1
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 914
+        width: 398
+        height: 474
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c61875c8a29293040800000000000000
+      internalID: 4627775354819805548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_2
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 952
+        width: 228
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf00458cf84b3cc90800000000000000
+      internalID: -7150673253699944197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_3
+      rect:
+        serializedVersion: 2
+        x: 790
+        y: 960
+        width: 165
+        height: 538
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5dde17b36ea64e8c0800000000000000
+      internalID: -3970931434361590315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_4
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 930
+        width: 356
+        height: 516
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b698cf6175a176a30800000000000000
+      internalID: 4208361338151143787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_5
+      rect:
+        serializedVersion: 2
+        x: 919
+        y: 879
+        width: 499
+        height: 412
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61fd9ea44c75e51f0800000000000000
+      internalID: -1054308762176069866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_6
+      rect:
+        serializedVersion: 2
+        x: 958
+        y: 811
+        width: 561
+        height: 242
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d672896c12fd1a1d0800000000000000
+      internalID: -3341144112373422227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_7
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 785
+        width: 560
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 470a5d8f1e222d170800000000000000
+      internalID: 8201656225332830324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_8
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 505
+        width: 563
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e3ee961e2e4f5330800000000000000
+      internalID: 3701763378576810985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_9
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 268
+        width: 495
+        height: 416
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95085beb9abf8c070800000000000000
+      internalID: 8127022234057670745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_10
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 115
+        width: 352
+        height: 518
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99fd9f29e64213b40800000000000000
+      internalID: 5418151884034269081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_11
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 178
+        width: 403
+        height: 473
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 505c1b0236828b690800000000000000
+      internalID: -7586269166090205947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_12
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 366
+        width: 519
+        height: 344
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d5ea4e3761b87f00800000000000000
+      internalID: 1114835964759041493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_13
+      rect:
+        serializedVersion: 2
+        x: 966
+        y: 619
+        width: 560
+        height: 161
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54a0e6fc8db08a210800000000000000
+      internalID: 1344337514591029829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_14
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 65
+        width: 161
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69494f4eeb39d5ce0800000000000000
+      internalID: -1414812259830164330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: sunburst putih_15
+      rect:
+        serializedVersion: 2
+        x: 815
+        y: 78
+        width: 233
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc0da2ef83b2b9490800000000000000
+      internalID: -7738544010923683633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      sunburst putih_0: -6607185241796851300
+      sunburst putih_1: 4627775354819805548
+      sunburst putih_10: 5418151884034269081
+      sunburst putih_11: -7586269166090205947
+      sunburst putih_12: 1114835964759041493
+      sunburst putih_13: 1344337514591029829
+      sunburst putih_14: -1414812259830164330
+      sunburst putih_15: -7738544010923683633
+      sunburst putih_2: -7150673253699944197
+      sunburst putih_3: -3970931434361590315
+      sunburst putih_4: 4208361338151143787
+      sunburst putih_5: -1054308762176069866
+      sunburst putih_6: -3341144112373422227
+      sunburst putih_7: 8201656225332830324
+      sunburst putih_8: 3701763378576810985
+      sunburst putih_9: 8127022234057670745
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

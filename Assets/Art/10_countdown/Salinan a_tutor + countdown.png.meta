@@ -1,0 +1,517 @@
+fileFormatVersion: 2
+guid: 3052817b9014c5748b4d275118cf2edc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4424331496361323396
+    second: Salinan a_tutor + countdown_0
+  - first:
+      213: -9037128536613653239
+    second: Salinan a_tutor + countdown_1
+  - first:
+      213: -6237870769453019341
+    second: Salinan a_tutor + countdown_2
+  - first:
+      213: -9122343085982090467
+    second: Salinan a_tutor + countdown_3
+  - first:
+      213: -204102439232477084
+    second: Salinan a_tutor + countdown_4
+  - first:
+      213: 4090510515109907338
+    second: Salinan a_tutor + countdown_5
+  - first:
+      213: -6170831845438649021
+    second: Salinan a_tutor + countdown_6
+  - first:
+      213: 2598718948905320383
+    second: Salinan a_tutor + countdown_7
+  - first:
+      213: -8568111627877487741
+    second: Salinan a_tutor + countdown_8
+  - first:
+      213: 900992046525021274
+    second: Salinan a_tutor + countdown_9
+  - first:
+      213: -7561266263103326734
+    second: Salinan a_tutor + countdown_10
+  - first:
+      213: -736061457155555213
+    second: Salinan a_tutor + countdown_11
+  - first:
+      213: 1810998331430019627
+    second: Salinan a_tutor + countdown_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_0
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 769
+        width: 271
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 48b60390e02666d30800000000000000
+      internalID: 4424331496361323396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_1
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 769
+        width: 39
+        height: 197
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 905f8990a7ba59280800000000000000
+      internalID: -9037128536613653239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_2
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 931
+        width: 43
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33fc5f7b591ae69a0800000000000000
+      internalID: -6237870769453019341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_3
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 735
+        width: 548
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1bfbc8ab4de66180800000000000000
+      internalID: -9122343085982090467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_4
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 769
+        width: 199
+        height: 145
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 468e1c3b9e1ea2df0800000000000000
+      internalID: -204102439232477084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_5
+      rect:
+        serializedVersion: 2
+        x: 739
+        y: 769
+        width: 216
+        height: 145
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8b402b14a964c830800000000000000
+      internalID: 4090510515109907338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_6
+      rect:
+        serializedVersion: 2
+        x: 984
+        y: 769
+        width: 39
+        height: 145
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34d06fb812dcc5aa0800000000000000
+      internalID: -6170831845438649021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_7
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 418
+        width: 105
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fbff39c8d11801420800000000000000
+      internalID: 2598718948905320383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_8
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 418
+        width: 234
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38be778ced3f71980800000000000000
+      internalID: -8568111627877487741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_9
+      rect:
+        serializedVersion: 2
+        x: 682
+        y: 418
+        width: 234
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5c739e1e77f08c00800000000000000
+      internalID: 900992046525021274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_10
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 478
+        width: 548
+        height: 212
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f5b49f156cf01790800000000000000
+      internalID: -7561266263103326734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_11
+      rect:
+        serializedVersion: 2
+        x: 1240
+        y: 258
+        width: 458
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3700369210cf8c5f0800000000000000
+      internalID: -736061457155555213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Salinan a_tutor + countdown_12
+      rect:
+        serializedVersion: 2
+        x: 1240
+        y: 127
+        width: 458
+        height: 99
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2226b92365f12910800000000000000
+      internalID: 1810998331430019627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: w
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 748
+        width: 957
+        height: 251
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be3ec6e081e41144ba5b752e11efc143
+      internalID: -549373007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6a5b72433c9b51e4a9579c93616dd5bc
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Salinan a_tutor + countdown_0: 4424331496361323396
+      Salinan a_tutor + countdown_1: -9037128536613653239
+      Salinan a_tutor + countdown_10: -7561266263103326734
+      Salinan a_tutor + countdown_11: -736061457155555213
+      Salinan a_tutor + countdown_12: 1810998331430019627
+      Salinan a_tutor + countdown_2: -6237870769453019341
+      Salinan a_tutor + countdown_3: -9122343085982090467
+      Salinan a_tutor + countdown_4: -204102439232477084
+      Salinan a_tutor + countdown_5: 4090510515109907338
+      Salinan a_tutor + countdown_6: -6170831845438649021
+      Salinan a_tutor + countdown_7: 2598718948905320383
+      Salinan a_tutor + countdown_8: -8568111627877487741
+      Salinan a_tutor + countdown_9: 900992046525021274
+      w: -549373007
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

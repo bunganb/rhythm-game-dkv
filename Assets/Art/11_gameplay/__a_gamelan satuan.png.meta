@@ -1,0 +1,520 @@
+fileFormatVersion: 2
+guid: c3a8d8a20108d6245981a21adf031222
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8589194586829113834
+    second: __a_gamelan satuan_0
+  - first:
+      213: 2779063143620909241
+    second: __a_gamelan satuan_1
+  - first:
+      213: 5232121853631272805
+    second: __a_gamelan satuan_2
+  - first:
+      213: -3767350015453019741
+    second: __a_gamelan satuan_3
+  - first:
+      213: 8167762841337560530
+    second: __a_gamelan satuan_4
+  - first:
+      213: -12567966901936278
+    second: __a_gamelan satuan_5
+  - first:
+      213: -8318050928446838455
+    second: __a_gamelan satuan_6
+  - first:
+      213: 6202794406694808578
+    second: __a_gamelan satuan_7
+  - first:
+      213: 539620512048066145
+    second: __a_gamelan satuan_8
+  - first:
+      213: -2664385424872274811
+    second: __a_gamelan satuan_9
+  - first:
+      213: 6827363927433529267
+    second: __a_gamelan satuan_10
+  - first:
+      213: 5359329973656513074
+    second: __a_gamelan satuan_11
+  - first:
+      213: 5239313849190506501
+    second: __a_gamelan satuan_12
+  - first:
+      213: 8587350448585741558
+    second: __a_gamelan satuan_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: __a_gamelan satuan_0
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 816
+        width: 478
+        height: 457
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 616b751e70d0dc880800000000000000
+      internalID: -8589194586829113834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_1
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 821
+        width: 406
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b897eb7437319620800000000000000
+      internalID: 2779063143620909241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_2
+      rect:
+        serializedVersion: 2
+        x: 1099
+        y: 828
+        width: 339
+        height: 431
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 567104bda1b3c9840800000000000000
+      internalID: 5232121853631272805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_3
+      rect:
+        serializedVersion: 2
+        x: 1522
+        y: 832
+        width: 307
+        height: 418
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a14c580f1fa7bbc0800000000000000
+      internalID: -3767350015453019741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_4
+      rect:
+        serializedVersion: 2
+        x: 1994
+        y: 816
+        width: 478
+        height: 457
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2dd7f8f8709b95170800000000000000
+      internalID: 8167762841337560530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_5
+      rect:
+        serializedVersion: 2
+        x: 2515
+        y: 821
+        width: 406
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6fd24d208953dff0800000000000000
+      internalID: -12567966901936278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_6
+      rect:
+        serializedVersion: 2
+        x: 2955
+        y: 828
+        width: 339
+        height: 431
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 949615260c8509c80800000000000000
+      internalID: -8318050928446838455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_7
+      rect:
+        serializedVersion: 2
+        x: 3378
+        y: 832
+        width: 307
+        height: 418
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20ce2d926a0c41650800000000000000
+      internalID: 6202794406694808578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_8
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 321
+        width: 390
+        height: 391
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16ea3262ffd1d7700800000000000000
+      internalID: 539620512048066145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_9
+      rect:
+        serializedVersion: 2
+        x: 641
+        y: 327
+        width: 440
+        height: 378
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58482c59293360bd0800000000000000
+      internalID: -2664385424872274811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_10
+      rect:
+        serializedVersion: 2
+        x: 1193
+        y: 315
+        width: 335
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b7cdfea15bafbe50800000000000000
+      internalID: 6827363927433529267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_11
+      rect:
+        serializedVersion: 2
+        x: 1995
+        y: 321
+        width: 390
+        height: 391
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 23a66e1573a206a40800000000000000
+      internalID: 5359329973656513074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_12
+      rect:
+        serializedVersion: 2
+        x: 2497
+        y: 327
+        width: 440
+        height: 378
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 500e8cfcf28c5b840800000000000000
+      internalID: 5239313849190506501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_gamelan satuan_13
+      rect:
+        serializedVersion: 2
+        x: 3049
+        y: 315
+        width: 335
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f49eb93cb56c2770800000000000000
+      internalID: 8587350448585741558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      __a_gamelan satuan_0: -8589194586829113834
+      __a_gamelan satuan_1: 2779063143620909241
+      __a_gamelan satuan_10: 6827363927433529267
+      __a_gamelan satuan_11: 5359329973656513074
+      __a_gamelan satuan_12: 5239313849190506501
+      __a_gamelan satuan_13: 8587350448585741558
+      __a_gamelan satuan_2: 5232121853631272805
+      __a_gamelan satuan_3: -3767350015453019741
+      __a_gamelan satuan_4: 8167762841337560530
+      __a_gamelan satuan_5: -12567966901936278
+      __a_gamelan satuan_6: -8318050928446838455
+      __a_gamelan satuan_7: 6202794406694808578
+      __a_gamelan satuan_8: 539620512048066145
+      __a_gamelan satuan_9: -2664385424872274811
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

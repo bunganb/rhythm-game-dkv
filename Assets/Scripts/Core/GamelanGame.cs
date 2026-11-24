@@ -58,14 +58,29 @@ namespace GamelanRhythm
         {
             Application.targetFrameRate = 60;
             Screen.orientation = ScreenOrientation.LandscapeLeft;
+            var authoredCanvas = transform.Find("Game Canvas");
+            usesAuthoredMenu = authoredCanvas != null && FindNamed(authoredCanvas, "Play") != null &&
+                               FindNamed(authoredCanvas, "Exit") != null;
             if (database == null) database = Resources.Load<SongDatabase>("SongDatabase");
             music = gameObject.AddComponent<AudioSource>();
             effects = gameObject.AddComponent<AudioSource>();
             voice = gameObject.AddComponent<AudioSource>();
             music.playOnAwake = effects.playOnAwake = voice.playOnAwake = false;
-            if (safeRoot == null) BuildUi();
+            if (usesAuthoredMenu)
+            {
+                // The menu scene owns its Canvas hierarchy. Do not recreate the
+                // old generated Safe Area or menu pages when those references are empty.
+                EnsureEventSystem();
+            }
+            else if (safeRoot == null) BuildUi();
             else BindSceneUi();
             BindParallaxUi();
+            // This authored menu has its own level select canvas. Let that
+            // screen flow own PLAY while keeping the existing gameplay flow
+            // available for scenes that do not have a level select canvas.
+            if (usesAuthoredMenu && transform.Find("Level Select Canvas") != null &&
+                GetComponent<LevelSelectTransition>() == null)
+                gameObject.AddComponent<LevelSelectTransition>();
             BindButtons();
             Show(Page.Menu);
         }
@@ -90,12 +105,21 @@ namespace GamelanRhythm
             if (module != null) module.AssignDefaultActions();
         }
 
+        void EnsureEventSystem()
+        {
+            if (FindFirstObjectByType<EventSystem>() != null) return;
+            var eventGo = new GameObject("EventSystem", typeof(EventSystem));
+            eventGo.transform.SetParent(transform, false);
+            eventGo.AddComponent<InputSystemUIInputModule>().AssignDefaultActions();
+        }
+
         void BindButtons()
         {
             if (usesAuthoredMenu)
             {
                 var authoredCanvas = transform.Find("Game Canvas");
-                Bind(authoredCanvas.gameObject, "Play", OpenSongs);
+                if (GetComponent<LevelSelectTransition>() == null)
+                    Bind(authoredCanvas.gameObject, "Play", OpenSongs);
                 Bind(authoredCanvas.gameObject, "Exit", ExitGame);
             }
             else
@@ -117,13 +141,16 @@ namespace GamelanRhythm
 
         void BindParallaxUi()
         {
-            if (safeRoot == null || safeRoot.parent == null) return;
-            var canvasRoot = safeRoot.parent;
             var authoredCanvas = transform.Find("Game Canvas");
-            if (authoredCanvas != null) canvasRoot = authoredCanvas;
+            Transform canvasRoot = authoredCanvas;
+            if (canvasRoot == null)
+            {
+                if (safeRoot == null || safeRoot.parent == null) return;
+                canvasRoot = safeRoot.parent;
+            }
             parallaxAnimator = canvasRoot.GetComponent<Animator>();
-            menuCanvasGroup = menuPage.GetComponent<CanvasGroup>();
-            songsCanvasGroup = songsPage.GetComponent<CanvasGroup>();
+            menuCanvasGroup = menuPage != null ? menuPage.GetComponent<CanvasGroup>() : null;
+            songsCanvasGroup = songsPage != null ? songsPage.GetComponent<CanvasGroup>() : null;
             var clickArea = canvasRoot.Find("Parallax Click Area");
             if (clickArea != null) parallaxClickArea = clickArea.GetComponent<Button>();
             if (usesAuthoredMenu)
@@ -150,6 +177,7 @@ namespace GamelanRhythm
 
         static void Bind(GameObject pageRoot, string buttonName, Action action)
         {
+            if (pageRoot == null) return;
             var target = FindNamed(pageRoot.transform, buttonName);
             if (target == null) return;
             var button = target.GetComponent<Button>();
@@ -191,7 +219,7 @@ namespace GamelanRhythm
 
         void Update()
         {
-            if (Screen.safeArea != lastSafeArea) ApplySafeArea();
+            if (safeRoot != null && Screen.safeArea != lastSafeArea) ApplySafeArea();
             if (page != Page.Playing || session == null) return;
             double elapsed = AudioSettings.dspTime - dspStart;
             float songTime = (float)elapsed - selectedSong.chartAudioOffset;
@@ -291,6 +319,7 @@ namespace GamelanRhythm
 
         void ApplySafeArea()
         {
+            if (safeRoot == null) return;
             lastSafeArea = Screen.safeArea;
             if (Screen.width <= 0 || Screen.height <= 0) return;
             safeRoot.anchorMin = new Vector2(lastSafeArea.xMin / Screen.width, lastSafeArea.yMin / Screen.height);
@@ -366,18 +395,29 @@ namespace GamelanRhythm
         void Show(Page next)
         {
             page = next;
-            menuPage.SetActive(next == Page.Menu);
-            songsPage.SetActive(next == Page.Songs);
-            setupPage.SetActive(next == Page.Setup);
-            playPage.SetActive(next == Page.Playing);
-            resultsPage.SetActive(next == Page.Results);
+            if (menuPage != null) menuPage.SetActive(next == Page.Menu);
+            if (songsPage != null) songsPage.SetActive(next == Page.Songs);
+            if (setupPage != null) setupPage.SetActive(next == Page.Setup);
+            if (playPage != null) playPage.SetActive(next == Page.Playing);
+            if (resultsPage != null) resultsPage.SetActive(next == Page.Results);
             if (next != Page.Playing) music.Stop();
-            errorLabel.text = "";
+            if (errorLabel != null) errorLabel.text = "";
             RefreshParallaxClickArea();
         }
 
         public void OpenSongs()
         {
+            // A persistent Inspector event can still call OpenSongs from the
+            // authored Play button. Route it to the level select flow instead
+            // of touching the song list that belongs to the gameplay UI.
+            if (transform.Find("Level Select Canvas") != null)
+            {
+                var levelSelect = GetComponent<LevelSelectTransition>();
+                if (levelSelect == null) levelSelect = gameObject.AddComponent<LevelSelectTransition>();
+                levelSelect.OpenLevelSelect();
+                return;
+            }
+
             if (parallaxTransitioning) return;
             if (parallaxAnimator != null && page == Page.Menu)
             {
@@ -393,6 +433,12 @@ namespace GamelanRhythm
 
         void OpenSongsNow()
         {
+            if (songList == null)
+            {
+                Debug.LogError("Song list UI is missing from this scene.", this);
+                return;
+            }
+
             foreach (Transform child in songList)
                 if (child != songButtonTemplate.transform) Destroy(child.gameObject);
             string databaseError = null;
@@ -486,6 +532,28 @@ namespace GamelanRhythm
                 parallaxClickArea.gameObject.SetActive(page == Page.Menu && !parallaxTransitioning);
         }
 
+        public void RestoreMenuAfterLevelSelect()
+        {
+            // LevelSelectTransition disables the whole main-menu Canvas while
+            // it is away. Rebind its animator when returning so any parallax
+            // clip/state left active before navigation cannot keep the menu
+            // click area in a stale state.
+            if (parallaxAnimator != null)
+            {
+                parallaxAnimator.Rebind();
+                parallaxAnimator.Update(0f);
+            }
+
+            parallaxDown = false;
+            parallaxTransitioning = false;
+            page = Page.Menu;
+            if (menuCanvasGroup != null) menuCanvasGroup.interactable = true;
+            if (songsCanvasGroup != null) songsCanvasGroup.interactable = false;
+            if (authoredPlayButton != null) authoredPlayButton.interactable = true;
+            if (authoredExitButton != null) authoredExitButton.interactable = true;
+            RefreshParallaxClickArea();
+        }
+
         public void StartSong()
         {
             if (!ChartValidator.TryLoad(selectedSong, out var chart, out string error)) { Error(error); return; }
@@ -538,7 +606,11 @@ namespace GamelanRhythm
         static string ScoreLine(PlayerScore score) => score.score + " pts  •  " + (score.Accuracy * 100).ToString("0.0") + "%";
         static string ResultBlock(string title, PlayerScore score) => title + "\n\n" + ScoreLine(score) + "\n\n" +
             "Perfect  " + score.perfect + "\nGood  " + score.good + "\nMiss  " + score.miss + "\n\nMax combo  " + score.maxCombo;
-        void Error(string message) { Debug.LogError(message); errorLabel.text = message; }
+        void Error(string message)
+        {
+            Debug.LogError(message);
+            if (errorLabel != null) errorLabel.text = message;
+        }
 
         sealed class PlayerView
         {
