@@ -45,7 +45,7 @@ namespace GamelanRhythm
                 if (note.time < previous) { error = song.name + " chart notes must be sorted by time (index " + i + ")"; return false; }
                 if (note.playerId != 1 && note.playerId != 2)
                 { error = song.name + " note " + i + " has invalid playerId"; return false; }
-                if (note.noteIndex < 1 || note.noteIndex > 6)
+                if (note.noteIndex < 1 || note.noteIndex > 7)
                 { error = song.name + " note " + i + " has invalid noteIndex"; return false; }
                 previous = note.time;
             }

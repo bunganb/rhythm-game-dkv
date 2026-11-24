@@ -167,7 +167,15 @@ namespace GamelanRhythm
             {
                 if (item.rect.name != "song-1" && item.rect.name != "song-2") continue;
                 var button = item.rect.GetComponent<Button>();
-                if (button != null) button.onClick.AddListener(() => Bounce(item));
+                if (button != null)
+                {
+                    string songId = item.rect.name == "song-1" ? "teye_sosbud_easy" : "teye_sosbud_hard";
+                    button.onClick.AddListener(() =>
+                    {
+                        GamelanGame.SelectGameplaySong(songId);
+                        Bounce(item);
+                    });
+                }
             }
         }
 

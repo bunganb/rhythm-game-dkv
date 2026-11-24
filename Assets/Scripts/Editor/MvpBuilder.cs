@@ -190,7 +190,7 @@ public static class MvpBuilder
         song.noteTravelDuration = 2;
         song.chartJson = new TextAsset(JsonUtility.ToJson(chart));
         Require(ChartValidator.TryLoad(song, out _, out _), "Valid chart rejected");
-        chart.notes[0].noteIndex = 7;
+        chart.notes[0].noteIndex = 8;
         song.chartJson = new TextAsset(JsonUtility.ToJson(chart));
         Require(!ChartValidator.TryLoad(song, out _, out _), "Invalid note index accepted");
         Object.DestroyImmediate(song.chartJson);

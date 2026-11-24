@@ -22,6 +22,12 @@ namespace GamelanRhythm
         public AudioClip missVoice;
         [Range(0, 1)] public float sfxVolume = 0.7f;
         [Range(1f, 1.5f)] public float missVoiceCooldown = 1.25f;
+        [SerializeField] bool gameplayStageMode;
+        [SerializeField] RectTransform gameplayHudRoot;
+        [SerializeField] Sprite[] rhythmNoteSprites = new Sprite[7];
+        [SerializeField] AudioClip[] pekingNoteSounds = new AudioClip[7];
+        [SerializeField] AudioClip[] saronNoteSounds = new AudioClip[7];
+        static string pendingGameplaySongId = "teye_sosbud_easy";
 
         enum Page { Menu, Songs, Setup, Playing, Results }
         Page page;
@@ -66,6 +72,22 @@ namespace GamelanRhythm
             effects = gameObject.AddComponent<AudioSource>();
             voice = gameObject.AddComponent<AudioSource>();
             music.playOnAwake = effects.playOnAwake = voice.playOnAwake = false;
+            if (gameplayStageMode)
+            {
+                EnsureEventSystem();
+                var playerOne = FindNamed(gameplayHudRoot, "Player 1");
+                var playerTwo = FindNamed(gameplayHudRoot, "Player 2");
+                if (gameplayHudRoot == null || playerOne == null || playerTwo == null)
+                {
+                    Debug.LogError("Gameplay HUD UI needs Player 1 and Player 2 objects with clickable Key buttons.", this);
+                    enabled = false;
+                    return;
+                }
+                views[0] = new PlayerView(this, playerOne, 1, true);
+                views[1] = new PlayerView(this, playerTwo, 2, true);
+                page = Page.Setup;
+                return;
+            }
             if (usesAuthoredMenu)
             {
                 // The menu scene owns its Canvas hierarchy. Do not recreate the
@@ -94,6 +116,28 @@ namespace GamelanRhythm
             setupPage.SetActive(false);
             playPage.SetActive(false);
             resultsPage.SetActive(false);
+        }
+
+        public void BeginGameplayStage()
+        {
+            if (!gameplayStageMode) return;
+            if (database == null) database = Resources.Load<SongDatabase>("SongDatabase");
+            selectedSong = null;
+            if (database != null)
+                selectedSong = database.songs.Find(song => song != null && song.songId == pendingGameplaySongId);
+            if (selectedSong == null && database != null)
+                selectedSong = database.songs.Find(song => song != null && ChartValidator.TryLoad(song, out _, out _));
+            if (selectedSong == null)
+            {
+                Debug.LogError("No valid song is available for the gameplay HUD.", this);
+                return;
+            }
+            StartSong();
+        }
+
+        public static void SelectGameplaySong(string songId)
+        {
+            if (!string.IsNullOrEmpty(songId)) pendingGameplaySongId = songId;
         }
 
         void BindSceneUi()
@@ -223,9 +267,10 @@ namespace GamelanRhythm
             if (page != Page.Playing || session == null) return;
             double elapsed = AudioSettings.dspTime - dspStart;
             float songTime = (float)elapsed - selectedSong.chartAudioOffset;
-            if (elapsed < 0) countdownLabel.text = Math.Max(1, (int)Math.Ceiling(-elapsed)).ToString();
-            else countdownLabel.text = elapsed < 0.55 ? "GO!" : "";
-            progressLabel.text = elapsed < 0.55 ? "" : Math.Max(0, songTime).ToString("0.0") + " / " + lastNoteTime.ToString("0.0") + "s";
+            if (countdownLabel != null)
+                countdownLabel.text = elapsed < 0 ? Math.Max(1, (int)Math.Ceiling(-elapsed)).ToString() : elapsed < 0.55 ? "GO!" : "";
+            if (progressLabel != null)
+                progressLabel.text = elapsed < 0.55 ? "" : Math.Max(0, songTime).ToString("0.0") + " / " + lastNoteTime.ToString("0.0") + "s";
             session.Expire(songTime, OnMiss);
             for (int i = 0; i < noteImages.Count; i++)
             {
@@ -263,7 +308,7 @@ namespace GamelanRhythm
                 Show(Page.Menu);
                 const string message = "Song stopped when the app was paused. Start again from song selection.";
                 Debug.LogWarning(message);
-                errorLabel.text = message;
+                if (errorLabel != null) errorLabel.text = message;
             }
         }
 
@@ -566,7 +611,7 @@ namespace GamelanRhythm
             foreach (var note in chart.notes) noteImages.Add(views[note.playerId - 1].CreateNote(note.noteIndex));
             music.Stop();
             music.clip = selectedSong.audioClip;
-            dspStart = AudioSettings.dspTime + countdownSeconds;
+            dspStart = AudioSettings.dspTime + (gameplayStageMode ? 0f : countdownSeconds);
             if (music.clip != null) music.PlayScheduled(dspStart);
             Show(Page.Playing);
         }
@@ -574,11 +619,20 @@ namespace GamelanRhythm
         public void Press(int playerId, int noteIndex)
         {
             if (page != Page.Playing || session == null) return;
+            PlayInstrumentNote(playerId, noteIndex);
             float songTime = (float)(AudioSettings.dspTime - dspStart) - selectedSong.chartAudioOffset;
             var judgment = session.Press(playerId, noteIndex, songTime, out _);
             if (judgment == Judgment.None) { views[playerId - 1].WrongTap(); return; }
             views[playerId - 1].Judge(judgment, session.players[playerId - 1]);
             var clip = judgment == Judgment.Perfect ? perfectSfx : goodSfx;
+            if (clip != null) effects.PlayOneShot(clip, sfxVolume);
+        }
+
+        void PlayInstrumentNote(int playerId, int noteIndex)
+        {
+            AudioClip[] instrumentNotes = playerId == 1 ? pekingNoteSounds : saronNoteSounds;
+            if (instrumentNotes == null || noteIndex < 1 || noteIndex > instrumentNotes.Length) return;
+            var clip = instrumentNotes[noteIndex - 1];
             if (clip != null) effects.PlayOneShot(clip, sfxVolume);
         }
 
@@ -598,6 +652,14 @@ namespace GamelanRhythm
         {
             var one = session.players[0];
             var two = session.players[1];
+            if (gameplayStageMode)
+            {
+                music.Stop();
+                page = Page.Setup;
+                if (playPage != null) playPage.SetActive(false);
+                Debug.Log("Rhythm chart complete. Both player scores are stored in the completed session.", this);
+                return;
+            }
             resultOne.text = ResultBlock("PLAYER 1 • SARON", one);
             resultTwo.text = ResultBlock("PLAYER 2 • PEKING", two);
             Show(Page.Results);
@@ -617,11 +679,16 @@ namespace GamelanRhythm
             readonly GamelanGame game;
             readonly int playerId;
             readonly RectTransform lane;
+            readonly RectTransform hitTarget;
             readonly Image noteTemplate;
             readonly TMP_Text score, popup;
             readonly Image flash;
+            readonly TMP_Text authoredFeedback;
+            readonly Vector3 authoredFeedbackBaseScale;
+            readonly Color authoredFeedbackBaseColor;
             readonly Color accent;
             Coroutine popupRoutine;
+            Coroutine authoredFeedbackRoutine;
 
             public PlayerView(GamelanGame game, Transform parent, int id, string instrument, Vector2 min, Vector2 max, bool rotated)
             {
@@ -654,11 +721,11 @@ namespace GamelanRhythm
                     new Vector2(0.37f, 0.7f), new Vector2(0.63f, 0.9f));
                 flash = Ui.Image(zone.transform, "Flash", new Color(accent.r, accent.g, accent.b, 0), new Vector2(0.17f, 0.44f), new Vector2(0.83f, 0.74f));
                 flash.raycastTarget = false;
-                for (int key = 1; key <= 6; key++)
+                for (int key = 1; key <= 7; key++)
                 {
-                    float left = 0.055f + (key - 1) * 0.15f;
+                    float left = 0.035f + (key - 1) * 0.135f;
                     var hit = Ui.Image(zone.transform, "Key " + key, new Color(0.17f, 0.25f, 0.3f),
-                        new Vector2(left, 0.07f), new Vector2(left + 0.135f, 0.39f));
+                        new Vector2(left, 0.07f), new Vector2(left + 0.125f, 0.39f));
                     var face = Ui.Image(hit.transform, "Face", accent, new Vector2(0.03f, 0.06f), new Vector2(0.97f, 0.94f));
                     face.raycastTarget = false;
                     Ui.Text(face.transform, "Number", key.ToString(), 54, Background, TextAlignmentOptions.Center,
@@ -685,11 +752,66 @@ namespace GamelanRhythm
                 }
             }
 
+            public PlayerView(GamelanGame game, Transform zone, int id, bool bindAuthoredButtons)
+            {
+                this.game = game;
+                playerId = id;
+                accent = id == 1 ? Gold : Aqua;
+                var laneTransform = FindNamed(zone, "notes-slide") ?? FindNamed(zone, "Note Lane");
+                lane = laneTransform as RectTransform;
+                if (lane == null)
+                    throw new InvalidOperationException(zone.name + " needs a notes-slide object with a RectTransform.");
+                hitTarget = FindNamed(zone, "finish_note") as RectTransform;
+
+                noteTemplate = lane.GetComponent<Image>();
+                if (noteTemplate == null)
+                    throw new InvalidOperationException(zone.name + "/notes-slide needs an Image placeholder to define note size and appearance.");
+                noteTemplate.raycastTarget = false;
+                // Keep the authored placeholder in the scene as the visual size reference,
+                // and clone it for chart notes while the song is playing.
+                noteTemplate.enabled = false;
+
+                var scoreTransform = FindNamed(zone, "Score");
+                score = scoreTransform != null ? scoreTransform.GetComponent<TMP_Text>() : null;
+                var popupTransform = FindNamed(zone, "Judgment");
+                popup = popupTransform != null ? popupTransform.GetComponent<TMP_Text>() : null;
+                var flashTransform = FindNamed(zone, "Flash");
+                flash = flashTransform != null ? flashTransform.GetComponent<Image>() : null;
+                var feedbackTransform = FindNamed(zone, "Feedback");
+                authoredFeedback = feedbackTransform != null ? feedbackTransform.GetComponent<TMP_Text>() : null;
+                if (authoredFeedback != null)
+                {
+                    authoredFeedback.raycastTarget = false;
+                    authoredFeedbackBaseScale = authoredFeedback.rectTransform.localScale;
+                    authoredFeedbackBaseColor = authoredFeedback.color;
+                    authoredFeedback.text = "";
+                    authoredFeedback.gameObject.SetActive(false);
+                }
+
+                for (int key = 1; key <= 7; key++)
+                {
+                    var keyTransform = FindNamed(zone, "Key " + key);
+                    if (keyTransform == null) continue;
+                    var button = keyTransform.GetComponent<Button>();
+                    var keyImage = keyTransform.GetComponent<Image>();
+                    if (button == null || keyImage == null) continue;
+
+                    var input = keyTransform.GetComponent<InstrumentKey>();
+                    if (input == null) input = keyTransform.gameObject.AddComponent<InstrumentKey>();
+                    input.Initialize(game, id, key, keyImage);
+                }
+            }
+
             public Image CreateNote(int key)
             {
-                var image = UnityEngine.Object.Instantiate(noteTemplate, lane);
+                var image = UnityEngine.Object.Instantiate(noteTemplate, lane.parent);
                 image.gameObject.name = "Note " + key;
-                image.GetComponentInChildren<TMP_Text>(true).text = key.ToString();
+                image.enabled = true;
+                image.rectTransform.anchorMin = image.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                image.rectTransform.sizeDelta = lane.rect.size;
+                if (game.rhythmNoteSprites != null && key >= 1 && key <= game.rhythmNoteSprites.Length &&
+                    game.rhythmNoteSprites[key - 1] != null)
+                    image.sprite = game.rhythmNoteSprites[key - 1];
                 image.gameObject.SetActive(false);
                 return image;
             }
@@ -697,11 +819,28 @@ namespace GamelanRhythm
             public void PositionNote(Image image, float fraction)
             {
                 float width = lane.rect.width;
-                image.rectTransform.anchoredPosition = new Vector2(Mathf.Lerp(width * 0.40f, -width * 0.38f, fraction), 0);
+                Transform coordinateSpace = lane.parent != null ? lane.parent : lane;
+                Vector2 laneCenter = coordinateSpace.InverseTransformPoint(lane.position);
+                Vector2 target = hitTarget != null
+                    ? (Vector2)coordinateSpace.InverseTransformPoint(hitTarget.position)
+                    : laneCenter + Vector2.left * width * 0.38f;
+                float startX = target.x < laneCenter.x ? laneCenter.x + width * 0.40f : laneCenter.x - width * 0.40f;
+                Vector2 start = new Vector2(startX, target.y);
+                image.rectTransform.anchoredPosition = Vector2.Lerp(start, target, Mathf.Clamp01(fraction));
             }
 
             public void Reset()
             {
+                if (authoredFeedbackRoutine != null) game.StopCoroutine(authoredFeedbackRoutine);
+                authoredFeedbackRoutine = null;
+                if (authoredFeedback != null)
+                {
+                    authoredFeedback.rectTransform.localScale = authoredFeedbackBaseScale;
+                    authoredFeedback.color = authoredFeedbackBaseColor;
+                    authoredFeedback.text = "";
+                    authoredFeedback.gameObject.SetActive(false);
+                }
+                if (score == null || popup == null || flash == null) return;
                 score.text = "0  •  COMBO 0";
                 popup.text = "";
                 flash.color = new Color(accent.r, accent.g, accent.b, 0);
@@ -709,18 +848,64 @@ namespace GamelanRhythm
 
             public void Judge(Judgment judgment, PlayerScore state)
             {
+                if (judgment == Judgment.Perfect || judgment == Judgment.Good)
+                    PopAuthoredFeedback(judgment == Judgment.Perfect ? "Jos!" : "Mantap!",
+                        judgment == Judgment.Perfect ? Gold : Aqua);
+                if (score == null) return;
                 score.text = state.score + "  •  COMBO " + state.combo;
-                string message = judgment == Judgment.Perfect ? "JOS!" : judgment == Judgment.Good ? "KURANG!" : "MELESET!";
+                string message = judgment == Judgment.Perfect ? "Jos!" : judgment == Judgment.Good ? "Mantap!" : "Aduh";
                 Color color = judgment == Judgment.Perfect ? Gold : judgment == Judgment.Good ? Aqua : new Color(0.9f, 0.4f, 0.43f);
                 Feedback(message, color, judgment == Judgment.Perfect ? 1f : 0.65f);
             }
 
-            public void WrongTap() => Feedback("", new Color(0.5f, 0.58f, 0.62f), 0.15f);
+            public void WrongTap()
+            {
+                var color = new Color(0.9f, 0.4f, 0.43f);
+                PopAuthoredFeedback("Aduh", color);
+                Feedback("Aduh", color, 0.15f);
+            }
 
             void Feedback(string message, Color color, float strength)
             {
+                if (popup == null || flash == null) return;
                 if (popupRoutine != null) game.StopCoroutine(popupRoutine);
                 popupRoutine = game.StartCoroutine(Animate(message, color, strength));
+            }
+
+            void PopAuthoredFeedback(string message, Color color)
+            {
+                if (authoredFeedback == null) return;
+                if (authoredFeedbackRoutine != null) game.StopCoroutine(authoredFeedbackRoutine);
+                authoredFeedbackRoutine = game.StartCoroutine(AnimateAuthoredFeedback(message, color));
+            }
+
+            IEnumerator AnimateAuthoredFeedback(string message, Color color)
+            {
+                authoredFeedback.gameObject.SetActive(true);
+                authoredFeedback.text = message;
+                authoredFeedback.color = color;
+                const float popDuration = 0.22f;
+                const float visibleDuration = 1.5f;
+                float elapsed = 0f;
+                while (elapsed < visibleDuration)
+                {
+                    elapsed += Time.unscaledDeltaTime;
+                    float popT = Mathf.Clamp01(elapsed / popDuration);
+                    float scale = popT < 0.7f
+                        ? Mathf.Lerp(0.55f, 1.12f, popT / 0.7f)
+                        : Mathf.Lerp(1.12f, 1f, (popT - 0.7f) / 0.3f);
+                    authoredFeedback.rectTransform.localScale = authoredFeedbackBaseScale * scale;
+                    float fade = Mathf.Clamp01((visibleDuration - elapsed) / 0.18f);
+                    Color currentColor = color;
+                    currentColor.a *= authoredFeedbackBaseColor.a * fade;
+                    authoredFeedback.color = currentColor;
+                    yield return null;
+                }
+                authoredFeedback.rectTransform.localScale = authoredFeedbackBaseScale;
+                authoredFeedback.color = authoredFeedbackBaseColor;
+                authoredFeedback.text = "";
+                authoredFeedback.gameObject.SetActive(false);
+                authoredFeedbackRoutine = null;
             }
 
             IEnumerator Animate(string message, Color color, float strength)

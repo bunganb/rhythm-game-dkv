@@ -270,6 +270,11 @@ namespace GamelanRhythm
                 StartCoroutine(ContinueAfterInstrumentReveal());
             else if (destination == countdownCanvas)
                 StartCoroutine(PlayCountdownSequence());
+            else if (destination == gameplayCanvas)
+            {
+                var rhythmGame = FindFirstObjectByType<GamelanGame>();
+                if (rhythmGame != null) rhythmGame.BeginGameplayStage();
+            }
         }
 
         IEnumerator ContinueAfterIntroReveal()
