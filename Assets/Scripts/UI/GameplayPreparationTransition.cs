@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,9 +22,12 @@ namespace GamelanRhythm
         [SerializeField] RectTransform tutorial2Canvas;
         [SerializeField] RectTransform countdownCanvas;
         [SerializeField] RectTransform gameplayCanvas;
+        [SerializeField] RectTransform appreciationCanvas;
+        [SerializeField] RectTransform badgeCanvas;
         [SerializeField, Min(0.1f)] float slideDuration = 0.7f;
-        [SerializeField, Min(0f)] float introRevealDuration = 5f;
-        [SerializeField, Min(0f)] float instrumentRevealDuration = 5f;
+        [SerializeField, Min(0f)] float introRevealDuration = 4.1f;
+        [SerializeField, Min(0f)] float instrumentPostPopDelay = 2f;
+        [SerializeField, Min(0.01f)] float instrumentRevealPopDuration = 0.38f;
         [SerializeField, Min(0.01f)] float countdownPopDuration = 0.32f;
         [SerializeField, Min(0f)] float countdownHoldDuration = 0.2f;
         [SerializeField, Min(1f)] float countdownPopScale = 1.2f;
@@ -45,6 +49,9 @@ namespace GamelanRhythm
         Vector3 startTextP2Scale;
         readonly Vector3[] countdownP1Scales = new Vector3[3];
         readonly Vector3[] countdownP2Scales = new Vector3[3];
+        readonly List<Transform> instrumentLabels = new List<Transform>();
+        readonly List<Transform> instrumentStars = new List<Transform>();
+        readonly Dictionary<Transform, Vector3> instrumentRevealScales = new Dictionary<Transform, Vector3>();
 
         void Awake()
         {
@@ -66,6 +73,8 @@ namespace GamelanRhythm
             gameplayCanvas = FindCanvas(gameplayCanvas, "Gameplay Canvas");
             if (gameplayCanvas == null)
                 gameplayCanvas = FindCanvas(gameplayCanvas, "Gameplay HUD Canvas");
+            appreciationCanvas = FindCanvas(appreciationCanvas, "Appreciation Canvas");
+            badgeCanvas = FindCanvas(badgeCanvas, "Badge Canvas");
 
             if (preparationCanvas == null || introRevealCanvas == null)
             {
@@ -75,7 +84,8 @@ namespace GamelanRhythm
             }
 
             stages = new[] { preparationCanvas, introRevealCanvas, instrumentRevealCanvas,
-                instrumentInfoCanvas, tutorial1Canvas, tutorial2Canvas, countdownCanvas, gameplayCanvas };
+                instrumentInfoCanvas, tutorial1Canvas, tutorial2Canvas, countdownCanvas, gameplayCanvas,
+                appreciationCanvas, badgeCanvas };
             stageGroups = new CanvasGroup[stages.Length];
             stageHomePositions = new Vector2[stages.Length];
             for (int i = 0; i < stages.Length; i++)
@@ -95,6 +105,7 @@ namespace GamelanRhythm
             if (slideDistance <= 0f) slideDistance = Screen.width;
             currentStage = preparationCanvas;
             CacheCountdownElements();
+            CacheInstrumentRevealElements();
             var introBack = FindNamed(introRevealCanvas, "back-to-home");
             if (introBack != null) introBack.gameObject.SetActive(false);
             BindButtons();
@@ -177,8 +188,14 @@ namespace GamelanRhythm
             BindForwardButton(instrumentInfoCanvas, "button-next", tutorial1Canvas);
             BindForwardButton(tutorial1Canvas, "button-next", tutorial2Canvas);
             BindForwardButton(tutorial2Canvas, "button-next", countdownCanvas);
+            BindForwardButton(appreciationCanvas, "next-button", badgeCanvas);
             BindHomeButton(instrumentRevealCanvas, "button-home");
             BindHomeButton(instrumentInfoCanvas, "button-home");
+
+            // Appreciation's home control may still be named back-button in the scene.
+            BindHomeToMainMenu(appreciationCanvas);
+            BindForwardToLevelSelect(badgeCanvas, "next-button");
+            BindHomeToMainMenu(badgeCanvas);
         }
 
         void BindForwardButton(RectTransform source, string buttonName, RectTransform destination)
@@ -197,6 +214,23 @@ namespace GamelanRhythm
             if (button != null) button.onClick.AddListener(BackToLevelSelect);
         }
 
+        void BindForwardToLevelSelect(RectTransform source, string buttonName)
+        {
+            if (source == null) return;
+            var found = FindNamed(source, buttonName);
+            var button = found != null ? found.GetComponent<Button>() : null;
+            if (button != null) button.onClick.AddListener(ReturnToLevelSelect);
+        }
+
+        void BindHomeToMainMenu(RectTransform source)
+        {
+            if (source == null) return;
+            Transform found = FindNamed(source, "button-home") ?? FindNamed(source, "home-button") ??
+                              FindNamed(source, "home") ?? FindNamed(source, "back-button");
+            var button = found != null ? found.GetComponent<Button>() : null;
+            if (button != null) button.onClick.AddListener(ReturnToMainMenu);
+        }
+
         static Transform FindNamed(Transform root, string name)
         {
             if (root == null) return null;
@@ -212,6 +246,23 @@ namespace GamelanRhythm
         public void ShowIntroReveal()
         {
             ShowStage(introRevealCanvas);
+        }
+
+        public void ShowAppreciation()
+        {
+            ShowStage(appreciationCanvas);
+        }
+
+        public void ReturnToLevelSelect()
+        {
+            if (!enabled || isTransitioning) return;
+            StartCoroutine(SlideAwayAndLoad(true));
+        }
+
+        public void ReturnToMainMenu()
+        {
+            if (!enabled || isTransitioning) return;
+            StartCoroutine(SlideAwayAndLoad(false));
         }
 
         public void ShowStage(RectTransform destination)
@@ -239,6 +290,11 @@ namespace GamelanRhythm
             Vector2 sourceHome = stageHomePositions[fromIndex];
             Vector2 destinationHome = stageHomePositions[toIndex];
 
+            if (destination == introRevealCanvas)
+                PrepareIntroRevealForSlideIn();
+            else if (destination == instrumentRevealCanvas)
+                PrepareInstrumentRevealForSlideIn();
+
             destination.gameObject.SetActive(true);
             destination.anchoredPosition = destinationHome + Vector2.right * slideDistance;
             SetGroup(sourceGroup, false);
@@ -265,9 +321,12 @@ namespace GamelanRhythm
             isTransitioning = false;
 
             if (destination == introRevealCanvas)
+            {
+                PlayIntroRevealSequence();
                 StartCoroutine(ContinueAfterIntroReveal());
+            }
             else if (destination == instrumentRevealCanvas)
-                StartCoroutine(ContinueAfterInstrumentReveal());
+                StartCoroutine(PlayInstrumentRevealSequence());
             else if (destination == countdownCanvas)
                 StartCoroutine(PlayCountdownSequence());
             else if (destination == gameplayCanvas)
@@ -284,11 +343,111 @@ namespace GamelanRhythm
                 ShowStage(instrumentRevealCanvas);
         }
 
-        IEnumerator ContinueAfterInstrumentReveal()
+        void PlayIntroRevealSequence()
         {
-            yield return new WaitForSecondsRealtime(instrumentRevealDuration);
+            var animator = GetIntroRevealAnimator();
+            if (animator == null) return;
+
+            animator.enabled = true;
+            animator.Rebind();
+            animator.Play("Intro Reveal Sequence", 0, 0f);
+            animator.Update(0f);
+        }
+
+        void PrepareIntroRevealForSlideIn()
+        {
+            var animator = GetIntroRevealAnimator();
+            if (animator == null) return;
+
+            animator.enabled = false;
+            var clips = animator.runtimeAnimatorController != null
+                ? animator.runtimeAnimatorController.animationClips
+                : null;
+            if (clips != null && clips.Length > 0)
+                clips[0].SampleAnimation(animator.gameObject, 0f);
+        }
+
+        Animator GetIntroRevealAnimator()
+        {
+            var introUi = introRevealCanvas != null
+                ? introRevealCanvas.Find("Safe Area/Intro Reveal UI")
+                : null;
+            return introUi != null ? introUi.GetComponent<Animator>() : null;
+        }
+
+        void CacheInstrumentRevealElements()
+        {
+            if (instrumentRevealCanvas == null) return;
+            var ui = instrumentRevealCanvas.Find("Safe Area/Instrument Reveal UI");
+            if (ui == null) return;
+
+            foreach (Transform element in ui.GetComponentsInChildren<Transform>(true))
+            {
+                string elementName = element.name.ToLowerInvariant();
+                if (elementName == "label") instrumentLabels.Add(element);
+                else if (elementName.StartsWith("star-decoration")) instrumentStars.Add(element);
+            }
+
+            CacheInstrumentScales(instrumentLabels);
+            CacheInstrumentScales(instrumentStars);
+        }
+
+        void CacheInstrumentScales(List<Transform> elements)
+        {
+            foreach (var element in elements)
+                if (element != null && !instrumentRevealScales.ContainsKey(element))
+                    instrumentRevealScales.Add(element, element.localScale);
+        }
+
+        void PrepareInstrumentRevealForSlideIn()
+        {
+            foreach (var pair in instrumentRevealScales)
+                if (pair.Key != null) pair.Key.localScale = pair.Value * 0.65f;
+        }
+
+        IEnumerator PlayInstrumentRevealSequence()
+        {
+            yield return StartCoroutine(PopInstrumentElements(instrumentLabels));
+            yield return StartCoroutine(PopInstrumentElements(instrumentStars));
+            yield return new WaitForSecondsRealtime(instrumentPostPopDelay);
             if (currentStage == instrumentRevealCanvas && !isTransitioning)
                 ShowStage(instrumentInfoCanvas);
+        }
+
+        IEnumerator PopInstrumentElements(List<Transform> elements)
+        {
+            if (elements.Count == 0) yield break;
+            float halfDuration = instrumentRevealPopDuration * 0.5f;
+            float elapsed = 0f;
+
+            while (elapsed < halfDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / halfDuration);
+                foreach (var element in elements)
+                {
+                    if (element == null || !instrumentRevealScales.TryGetValue(element, out var scale)) continue;
+                    element.localScale = Vector3.LerpUnclamped(scale * 0.65f, scale * 1.16f, t);
+                }
+                yield return null;
+            }
+
+            elapsed = 0f;
+            while (elapsed < halfDuration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / halfDuration);
+                foreach (var element in elements)
+                {
+                    if (element == null || !instrumentRevealScales.TryGetValue(element, out var scale)) continue;
+                    element.localScale = Vector3.LerpUnclamped(scale * 1.16f, scale, t);
+                }
+                yield return null;
+            }
+
+            foreach (var element in elements)
+                if (element != null && instrumentRevealScales.TryGetValue(element, out var scale))
+                    element.localScale = scale;
         }
 
         IEnumerator PlayCountdownSequence()
@@ -378,6 +537,11 @@ namespace GamelanRhythm
 
         IEnumerator SlideBackToLevelSelect()
         {
+            yield return SlideAwayAndLoad(true);
+        }
+
+        IEnumerator SlideAwayAndLoad(bool openLevelSelect)
+        {
             int index = IndexOf(currentStage);
             if (index < 0) yield break;
 
@@ -396,8 +560,7 @@ namespace GamelanRhythm
             }
 
             currentStage.anchoredPosition = home - Vector2.right * slideDistance;
-
-            LevelSelectTransition.OpenLevelSelectAfterSceneLoad();
+            if (openLevelSelect) LevelSelectTransition.OpenLevelSelectAfterSceneLoad();
             SceneManager.LoadScene(mainMenuSceneName);
         }
 

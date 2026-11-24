@@ -14,6 +14,7 @@ namespace GamelanRhythm
     public sealed class LevelSelectTransition : MonoBehaviour
     {
         static bool openLevelSelectOnNextMainMenuLoad;
+        static string selectedDifficultySongId;
 
         [SerializeField] RectTransform mainMenuCanvas;
         [SerializeField] RectTransform levelSelectCanvas;
@@ -26,7 +27,7 @@ namespace GamelanRhythm
 
         static readonly string[] PopOrder =
         {
-            "song-1", "song-2",
+            "song-easy", "song-hard",
             "decoration", "decoration (1)", "decoration (2)", "decoration (3)",
             "label-1", "label-2", "back-to-home-btn", "next-button",
             "level-title-head"
@@ -39,6 +40,7 @@ namespace GamelanRhythm
         CanvasGroup levelCanvasGroup;
         VideoPlayer introVideoPlayer;
         Button introVideoNextButton;
+        Button levelSelectNextButton;
         Vector2 menuHomePosition;
         Vector2 levelHomePosition;
         Vector2 videoHomePosition;
@@ -144,8 +146,13 @@ namespace GamelanRhythm
             }
 
             var nextTransform = FindNamed(levelSelectCanvas, "next-button");
-            var nextButton = nextTransform != null ? nextTransform.GetComponent<Button>() : null;
-            if (nextButton != null) nextButton.onClick.AddListener(EnterGameplay);
+            levelSelectNextButton = nextTransform != null ? nextTransform.GetComponent<Button>() : null;
+            if (levelSelectNextButton != null)
+            {
+                levelSelectNextButton.onClick.AddListener(EnterGameplay);
+                levelSelectNextButton.interactable = !string.IsNullOrEmpty(selectedDifficultySongId);
+            }
+            ApplyDifficultySelectionVisuals();
         }
 
         void CachePopItems()
@@ -161,21 +168,37 @@ namespace GamelanRhythm
             foreach (string itemName in SlideDownOrder)
                 CachePopItem(uiRoot, itemName, true);
 
-            // Song buttons are currently selection placeholders. Keep their
-            // existing Button/Inspector actions intact and add touch feedback.
+            // Difficulty buttons select a chart and provide a bounce confirmation.
             foreach (var item in popItems)
             {
-                if (item.rect.name != "song-1" && item.rect.name != "song-2") continue;
+                if (item.rect.name != "song-easy" && item.rect.name != "song-hard") continue;
                 var button = item.rect.GetComponent<Button>();
                 if (button != null)
                 {
-                    string songId = item.rect.name == "song-1" ? "teye_sosbud_easy" : "teye_sosbud_hard";
-                    button.onClick.AddListener(() =>
-                    {
-                        GamelanGame.SelectGameplaySong(songId);
-                        Bounce(item);
-                    });
+                    string songId = item.rect.name == "song-easy" ? "teye_sosbud_easy" : "teye_sosbud_hard";
+                    button.onClick.AddListener(() => SelectDifficulty(songId, item));
                 }
+            }
+        }
+
+        void SelectDifficulty(string songId, PopItem item)
+        {
+            selectedDifficultySongId = songId;
+            GamelanGame.SelectGameplaySong(songId);
+            if (levelSelectNextButton != null) levelSelectNextButton.interactable = true;
+            ApplyDifficultySelectionVisuals();
+            Bounce(item);
+        }
+
+        void ApplyDifficultySelectionVisuals()
+        {
+            foreach (var item in popItems)
+            {
+                if (item.rect.name != "song-easy" && item.rect.name != "song-hard") continue;
+                bool selected = item.rect.name == "song-easy"
+                    ? selectedDifficultySongId == "teye_sosbud_easy"
+                    : selectedDifficultySongId == "teye_sosbud_hard";
+                item.group.alpha = string.IsNullOrEmpty(selectedDifficultySongId) || selected ? 1f : 0.62f;
             }
         }
 
@@ -308,7 +331,8 @@ namespace GamelanRhythm
 
         public void EnterGameplay()
         {
-            if (!enabled || isTransitioning) return;
+            if (!enabled || isTransitioning || string.IsNullOrEmpty(selectedDifficultySongId)) return;
+            GamelanGame.SelectGameplaySong(selectedDifficultySongId);
             StartCoroutine(SlideToGameplay());
         }
 
@@ -415,6 +439,7 @@ namespace GamelanRhythm
                 item.group.interactable = true;
                 item.group.blocksRaycasts = true;
             }
+            ApplyDifficultySelectionVisuals();
         }
 
         IEnumerator Pop(PopItem item)

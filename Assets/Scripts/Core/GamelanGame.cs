@@ -13,14 +13,19 @@ namespace GamelanRhythm
     {
         public SongDatabase database;
         [Header("Timing (seconds)")]
-        [Range(0.01f, 0.15f)] public float perfectWindow = 0.060f;
-        [Range(0.05f, 0.3f)] public float goodWindow = 0.150f;
+        [Range(0.01f, 0.20f)] public float perfectWindow = 0.090f;
+        [Range(0.05f, 0.40f)] public float goodWindow = 0.220f;
+        [Tooltip("Moves registered taps earlier or later to compensate for touchscreen latency. Positive values make taps count later.")]
+        [Range(-0.20f, 0.20f)] public float inputTimingOffset;
         [Range(1f, 5f)] public float countdownSeconds = 3f;
         [Header("Optional feedback audio")]
         public AudioClip perfectSfx;
         public AudioClip goodSfx;
         public AudioClip missVoice;
         [Range(0, 1)] public float sfxVolume = 0.7f;
+        [Header("Gameplay Mix")]
+        [Range(0, 1)] public float musicVolume = 0.35f;
+        [Range(0, 1)] public float instrumentNoteVolume = 1f;
         [Range(1f, 1.5f)] public float missVoiceCooldown = 1.25f;
         [SerializeField] bool gameplayStageMode;
         [SerializeField] RectTransform gameplayHudRoot;
@@ -34,6 +39,8 @@ namespace GamelanRhythm
         SongData selectedSong;
         RhythmSession session;
         readonly List<Image> noteImages = new List<Image>();
+        readonly List<Image> approachCircles = new List<Image>();
+        bool[] noteHitAnimating = new bool[0];
         readonly PlayerView[] views = new PlayerView[2];
         [SerializeField] RectTransform safeRoot;
         Rect lastSafeArea;
@@ -49,7 +56,7 @@ namespace GamelanRhythm
         bool parallaxDown, parallaxTransitioning;
         const float ParallaxDuration = 1.25f;
         const float ParallaxPageSwapTime = 0.28f;
-        AudioSource music, effects, voice;
+        AudioSource music, effects, voice, pekingNotes, saronNotes;
         double dspStart;
         double lastVoiceDsp = -100;
         float lastNoteTime;
@@ -71,7 +78,17 @@ namespace GamelanRhythm
             music = gameObject.AddComponent<AudioSource>();
             effects = gameObject.AddComponent<AudioSource>();
             voice = gameObject.AddComponent<AudioSource>();
-            music.playOnAwake = effects.playOnAwake = voice.playOnAwake = false;
+            pekingNotes = gameObject.AddComponent<AudioSource>();
+            saronNotes = gameObject.AddComponent<AudioSource>();
+            music.playOnAwake = effects.playOnAwake = voice.playOnAwake =
+                pekingNotes.playOnAwake = saronNotes.playOnAwake = false;
+            pekingNotes.spatialBlend = saronNotes.spatialBlend = 0f;
+            pekingNotes.dopplerLevel = saronNotes.dopplerLevel = 0f;
+            pekingNotes.priority = saronNotes.priority = 0;
+            music.volume = musicVolume;
+            pekingNotes.volume = saronNotes.volume = instrumentNoteVolume;
+            PreloadInstrumentNotes(pekingNoteSounds);
+            PreloadInstrumentNotes(saronNoteSounds);
             if (gameplayStageMode)
             {
                 EnsureEventSystem();
@@ -219,6 +236,24 @@ namespace GamelanRhythm
             return null;
         }
 
+        static Transform FindNamedIgnoreCase(Transform root, string name)
+        {
+            if (root == null) return null;
+            if (string.Equals(root.name, name, StringComparison.OrdinalIgnoreCase)) return root;
+            for (int i = 0; i < root.childCount; i++)
+            {
+                var found = FindNamedIgnoreCase(root.GetChild(i), name);
+                if (found != null) return found;
+            }
+            return null;
+        }
+
+        static Image FindImageNamed(Transform root, string name)
+        {
+            var found = FindNamedIgnoreCase(root, name);
+            return found != null ? found.GetComponent<Image>() : null;
+        }
+
         static void Bind(GameObject pageRoot, string buttonName, Action action)
         {
             if (pageRoot == null) return;
@@ -267,23 +302,35 @@ namespace GamelanRhythm
             if (page != Page.Playing || session == null) return;
             double elapsed = AudioSettings.dspTime - dspStart;
             float songTime = (float)elapsed - selectedSong.chartAudioOffset;
+            float judgmentTime = songTime + inputTimingOffset;
             if (countdownLabel != null)
                 countdownLabel.text = elapsed < 0 ? Math.Max(1, (int)Math.Ceiling(-elapsed)).ToString() : elapsed < 0.55 ? "GO!" : "";
             if (progressLabel != null)
                 progressLabel.text = elapsed < 0.55 ? "" : Math.Max(0, songTime).ToString("0.0") + " / " + lastNoteTime.ToString("0.0") + "s";
-            session.Expire(songTime, OnMiss);
+            session.Expire(judgmentTime, OnMiss);
             for (int i = 0; i < noteImages.Count; i++)
             {
                 var image = noteImages[i];
                 if (image == null) continue;
                 var note = session.chart.notes[i];
+                bool hitAnimating = i < noteHitAnimating.Length && noteHitAnimating[i];
+                var circle = i < approachCircles.Count ? approachCircles[i] : null;
+                if (hitAnimating) continue;
                 float travel = selectedSong.noteTravelDuration;
                 bool visible = !session.resolved[i] && songTime >= note.time - travel && songTime <= note.time + goodWindow;
                 if (image.gameObject.activeSelf != visible) image.gameObject.SetActive(visible);
+                if (circle != null && circle.gameObject.activeSelf != visible) circle.gameObject.SetActive(visible);
                 if (visible)
                 {
                     float t = (songTime - (note.time - travel)) / travel;
-                    views[note.playerId - 1].PositionNote(image, t);
+                    var view = views[note.playerId - 1];
+                    view.PositionNote(image.rectTransform, t);
+                    view.AnimateNoteTravel(image, t);
+                    if (circle != null)
+                    {
+                        view.PositionNote(circle.rectTransform, t);
+                        view.ScaleApproachCircle(circle, t);
+                    }
                 }
             }
             double audioEnd = selectedSong.audioClip == null ? 0 : selectedSong.audioClip.length;
@@ -607,10 +654,20 @@ namespace GamelanRhythm
             lastVoiceDsp = -100;
             for (int i = 0; i < 2; i++) views[i].Reset();
             foreach (var image in noteImages) if (image != null) Destroy(image.gameObject);
+            foreach (var circle in approachCircles) if (circle != null) Destroy(circle.gameObject);
             noteImages.Clear();
-            foreach (var note in chart.notes) noteImages.Add(views[note.playerId - 1].CreateNote(note.noteIndex));
+            approachCircles.Clear();
+            noteHitAnimating = new bool[chart.notes.Length];
+            foreach (var note in chart.notes)
+            {
+                var view = views[note.playerId - 1];
+                approachCircles.Add(view.CreateApproachCircle());
+                noteImages.Add(view.CreateNote(note.noteIndex));
+            }
             music.Stop();
             music.clip = selectedSong.audioClip;
+            music.volume = musicVolume;
+            pekingNotes.volume = saronNotes.volume = instrumentNoteVolume;
             dspStart = AudioSettings.dspTime + (gameplayStageMode ? 0f : countdownSeconds);
             if (music.clip != null) music.PlayScheduled(dspStart);
             Show(Page.Playing);
@@ -620,12 +677,64 @@ namespace GamelanRhythm
         {
             if (page != Page.Playing || session == null) return;
             PlayInstrumentNote(playerId, noteIndex);
-            float songTime = (float)(AudioSettings.dspTime - dspStart) - selectedSong.chartAudioOffset;
-            var judgment = session.Press(playerId, noteIndex, songTime, out _);
+            float songTime = (float)(AudioSettings.dspTime - dspStart) - selectedSong.chartAudioOffset + inputTimingOffset;
+            var judgment = session.Press(playerId, noteIndex, songTime, out int eventIndex);
             if (judgment == Judgment.None) { views[playerId - 1].WrongTap(); return; }
             views[playerId - 1].Judge(judgment, session.players[playerId - 1]);
+            if (eventIndex >= 0 && eventIndex < noteImages.Count)
+            {
+                noteHitAnimating[eventIndex] = true;
+                StartCoroutine(AnimateHitNote(eventIndex));
+                views[playerId - 1].PlayHitEffects();
+            }
             var clip = judgment == Judgment.Perfect ? perfectSfx : goodSfx;
             if (clip != null) effects.PlayOneShot(clip, sfxVolume);
+        }
+
+        IEnumerator AnimateHitNote(int eventIndex)
+        {
+            var image = noteImages[eventIndex];
+            var circle = eventIndex < approachCircles.Count ? approachCircles[eventIndex] : null;
+            if (image == null)
+            {
+                noteHitAnimating[eventIndex] = false;
+                yield break;
+            }
+
+            image.gameObject.SetActive(true);
+            if (circle != null) circle.gameObject.SetActive(true);
+            Vector3 baseScale = image.rectTransform.localScale;
+            Color baseColor = image.color;
+            Color circleBaseColor = circle != null ? circle.color : Color.white;
+            const float duration = 0.25f;
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                float bounce = Mathf.Sin(t * Mathf.PI);
+                image.rectTransform.localScale = baseScale * (1f + 0.24f * bounce);
+                Color color = baseColor;
+                color.a = baseColor.a * (1f - t);
+                image.color = color;
+                if (circle != null)
+                {
+                    Color circleColor = circleBaseColor;
+                    circleColor.a = circleBaseColor.a * (1f - t);
+                    circle.color = circleColor;
+                }
+                yield return null;
+            }
+
+            image.color = baseColor;
+            image.rectTransform.localScale = baseScale;
+            image.gameObject.SetActive(false);
+            if (circle != null)
+            {
+                circle.color = circleBaseColor;
+                circle.gameObject.SetActive(false);
+            }
+            noteHitAnimating[eventIndex] = false;
         }
 
         void PlayInstrumentNote(int playerId, int noteIndex)
@@ -633,7 +742,18 @@ namespace GamelanRhythm
             AudioClip[] instrumentNotes = playerId == 1 ? pekingNoteSounds : saronNoteSounds;
             if (instrumentNotes == null || noteIndex < 1 || noteIndex > instrumentNotes.Length) return;
             var clip = instrumentNotes[noteIndex - 1];
-            if (clip != null) effects.PlayOneShot(clip, sfxVolume);
+            if (clip != null)
+            {
+                var source = playerId == 1 ? pekingNotes : saronNotes;
+                source.PlayOneShot(clip);
+            }
+        }
+
+        static void PreloadInstrumentNotes(AudioClip[] clips)
+        {
+            if (clips == null) return;
+            foreach (var clip in clips)
+                if (clip != null) clip.LoadAudioData();
         }
 
         void OnMiss(int eventIndex)
@@ -658,6 +778,9 @@ namespace GamelanRhythm
                 page = Page.Setup;
                 if (playPage != null) playPage.SetActive(false);
                 Debug.Log("Rhythm chart complete. Both player scores are stored in the completed session.", this);
+                var transition = FindFirstObjectByType<GameplayPreparationTransition>();
+                if (transition != null) transition.ShowAppreciation();
+                else Debug.LogWarning("Gameplay finished, but no GameplayPreparationTransition was found to show Appreciation Canvas.", this);
                 return;
             }
             resultOne.text = ResultBlock("PLAYER 1 • SARON", one);
@@ -681,6 +804,11 @@ namespace GamelanRhythm
             readonly RectTransform lane;
             readonly RectTransform hitTarget;
             readonly Image noteTemplate;
+            readonly Vector3 noteBaseScale;
+            readonly Color noteBaseColor;
+            readonly Image circularTemplate;
+            readonly Image circleWindTemplate;
+            readonly Image hitVfxTemplate;
             readonly TMP_Text score, popup;
             readonly Image flash;
             readonly TMP_Text authoredFeedback;
@@ -763,13 +891,21 @@ namespace GamelanRhythm
                     throw new InvalidOperationException(zone.name + " needs a notes-slide object with a RectTransform.");
                 hitTarget = FindNamed(zone, "finish_note") as RectTransform;
 
-                noteTemplate = lane.GetComponent<Image>();
+                var authoredNote = FindNamedIgnoreCase(lane, "not");
+                noteTemplate = authoredNote != null ? authoredNote.GetComponent<Image>() : lane.GetComponent<Image>();
                 if (noteTemplate == null)
-                    throw new InvalidOperationException(zone.name + "/notes-slide needs an Image placeholder to define note size and appearance.");
+                    throw new InvalidOperationException(zone.name + "/notes-slide needs a child Image named Not to use as its note template.");
+                noteBaseScale = noteTemplate.rectTransform.localScale;
+                noteBaseColor = noteTemplate.color;
                 noteTemplate.raycastTarget = false;
-                // Keep the authored placeholder in the scene as the visual size reference,
-                // and clone it for chart notes while the song is playing.
-                noteTemplate.enabled = false;
+                noteTemplate.gameObject.SetActive(false);
+
+                circularTemplate = FindImageNamed(lane, "circular");
+                circleWindTemplate = FindImageNamed(lane, "circle_wind");
+                hitVfxTemplate = FindImageNamed(lane, "hit_vfx");
+                HideEffectTemplate(circularTemplate);
+                HideEffectTemplate(circleWindTemplate);
+                HideEffectTemplate(hitVfxTemplate);
 
                 var scoreTransform = FindNamed(zone, "Score");
                 score = scoreTransform != null ? scoreTransform.GetComponent<TMP_Text>() : null;
@@ -806,9 +942,14 @@ namespace GamelanRhythm
             {
                 var image = UnityEngine.Object.Instantiate(noteTemplate, lane.parent);
                 image.gameObject.name = "Note " + key;
+                image.gameObject.SetActive(true);
                 image.enabled = true;
                 image.rectTransform.anchorMin = image.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
-                image.rectTransform.sizeDelta = lane.rect.size;
+                image.rectTransform.sizeDelta = noteTemplate.rectTransform.sizeDelta;
+                image.rectTransform.localScale = noteBaseScale;
+                Color initialColor = noteBaseColor;
+                initialColor.a = 0f;
+                image.color = initialColor;
                 if (game.rhythmNoteSprites != null && key >= 1 && key <= game.rhythmNoteSprites.Length &&
                     game.rhythmNoteSprites[key - 1] != null)
                     image.sprite = game.rhythmNoteSprites[key - 1];
@@ -816,7 +957,21 @@ namespace GamelanRhythm
                 return image;
             }
 
-            public void PositionNote(Image image, float fraction)
+            public Image CreateApproachCircle()
+            {
+                if (circularTemplate == null) return null;
+                var image = UnityEngine.Object.Instantiate(circularTemplate, lane.parent);
+                image.gameObject.name = "Approach Circular";
+                image.gameObject.SetActive(true);
+                image.raycastTarget = false;
+                image.rectTransform.anchorMin = image.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                image.rectTransform.sizeDelta = noteTemplate.rectTransform.sizeDelta;
+                image.rectTransform.localScale = Vector3.one * 1.7f;
+                image.gameObject.SetActive(false);
+                return image;
+            }
+
+            public void PositionNote(RectTransform movingRect, float fraction)
             {
                 float width = lane.rect.width;
                 Transform coordinateSpace = lane.parent != null ? lane.parent : lane;
@@ -824,9 +979,103 @@ namespace GamelanRhythm
                 Vector2 target = hitTarget != null
                     ? (Vector2)coordinateSpace.InverseTransformPoint(hitTarget.position)
                     : laneCenter + Vector2.left * width * 0.38f;
-                float startX = target.x < laneCenter.x ? laneCenter.x + width * 0.40f : laneCenter.x - width * 0.40f;
-                Vector2 start = new Vector2(startX, target.y);
-                image.rectTransform.anchoredPosition = Vector2.Lerp(start, target, Mathf.Clamp01(fraction));
+                movingRect.anchoredPosition = Vector2.Lerp(laneCenter, target, Mathf.Clamp01(fraction));
+            }
+
+            public void AnimateNoteTravel(Image image, float fraction)
+            {
+                float t = Mathf.Clamp01(fraction);
+                float scale;
+                if (t <= 0.5f)
+                {
+                    float grow = Mathf.SmoothStep(0f, 1f, t * 2f);
+                    scale = Mathf.Lerp(0.72f, 1.12f, grow);
+                }
+                else
+                {
+                    float settle = Mathf.SmoothStep(0f, 1f, (t - 0.5f) * 2f);
+                    scale = Mathf.Lerp(1.12f, 1f, settle);
+                }
+
+                float fadeIn = Mathf.SmoothStep(0f, 1f, t / 0.22f);
+                image.rectTransform.localScale = noteBaseScale * scale;
+                Color color = noteBaseColor;
+                color.a *= fadeIn;
+                image.color = color;
+            }
+
+            public void ScaleApproachCircle(Image circle, float fraction)
+            {
+                float t = Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(fraction));
+                circle.rectTransform.localScale = Vector3.one * Mathf.Lerp(1.7f, 1f, t);
+            }
+
+            public void PlayHitEffects()
+            {
+                if (hitTarget == null || (circleWindTemplate == null && hitVfxTemplate == null)) return;
+                game.StartCoroutine(AnimateHitEffects());
+            }
+
+            IEnumerator AnimateHitEffects()
+            {
+                Transform coordinateSpace = lane.parent != null ? lane.parent : lane;
+                Vector2 target = coordinateSpace.InverseTransformPoint(hitTarget.position);
+                Image wind = CreateEffect(circleWindTemplate, "Hit Circle Wind", target);
+                Image burst = CreateEffect(hitVfxTemplate, "Hit VFX", target);
+                Quaternion windBaseRotation = wind != null ? wind.rectTransform.localRotation : Quaternion.identity;
+                const float duration = 0.36f;
+                float elapsed = 0f;
+                while (elapsed < duration)
+                {
+                    elapsed += Time.unscaledDeltaTime;
+                    float t = Mathf.Clamp01(elapsed / duration);
+                    if (wind != null)
+                    {
+                        float windT = Mathf.Clamp01(elapsed / 0.30f);
+                        float eased = Mathf.SmoothStep(0f, 1f, windT);
+                        wind.rectTransform.localScale = Vector3.one * Mathf.Lerp(0.55f, 1.45f, eased);
+                        wind.rectTransform.localRotation = windBaseRotation * Quaternion.Euler(0f, 0f, -420f * windT);
+                        SetImageAlpha(wind, 1f - windT);
+                    }
+                    if (burst != null)
+                    {
+                        float burstT = Mathf.Clamp01((elapsed - 0.10f) / 0.24f);
+                        burst.gameObject.SetActive(elapsed >= 0.10f);
+                        float eased = Mathf.SmoothStep(0f, 1f, burstT);
+                        burst.rectTransform.localScale = Vector3.one * Mathf.Lerp(0.35f, 1.25f, eased);
+                        SetImageAlpha(burst, elapsed < 0.10f ? 0f : 1f - burstT);
+                    }
+                    yield return null;
+                }
+                if (wind != null) UnityEngine.Object.Destroy(wind.gameObject);
+                if (burst != null) UnityEngine.Object.Destroy(burst.gameObject);
+            }
+
+            Image CreateEffect(Image template, string objectName, Vector2 target)
+            {
+                if (template == null) return null;
+                var image = UnityEngine.Object.Instantiate(template, lane.parent);
+                image.gameObject.name = objectName;
+                image.gameObject.SetActive(true);
+                image.raycastTarget = false;
+                image.rectTransform.anchorMin = image.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+                image.rectTransform.anchoredPosition = target;
+                image.rectTransform.localScale = Vector3.one * 0.4f;
+                return image;
+            }
+
+            static void SetImageAlpha(Image image, float alpha)
+            {
+                Color color = image.color;
+                color.a = alpha;
+                image.color = color;
+            }
+
+            static void HideEffectTemplate(Image image)
+            {
+                if (image == null) return;
+                image.raycastTarget = false;
+                image.gameObject.SetActive(false);
             }
 
             public void Reset()

@@ -390,7 +390,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button ryhthm_8
+      name: circle_wind
       rect:
         serializedVersion: 2
         x: 676
@@ -456,7 +456,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button ryhthm_11
+      name: hit_vfx
       rect:
         serializedVersion: 2
         x: 1162
@@ -588,7 +588,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Button ryhthm_17
+      name: circular
       rect:
         serializedVersion: 2
         x: 1211
@@ -802,11 +802,9 @@ TextureImporter:
       Button ryhthm_0: -4150778129195493199
       Button ryhthm_1: -4728567657111556429
       Button ryhthm_10: 9120708788996117949
-      Button ryhthm_11: -4639842114065500288
       Button ryhthm_12: -8500413706907820430
       Button ryhthm_14: 1758889616609094934
       Button ryhthm_16: -7165016217311740268
-      Button ryhthm_17: 1184204539931650687
       Button ryhthm_19: 4589812318782135456
       Button ryhthm_2: -2433411620787507570
       Button ryhthm_21: 252559092832039402
@@ -816,7 +814,6 @@ TextureImporter:
       Button ryhthm_4: 7110216874084252404
       Button ryhthm_5: -7731021502767577374
       Button ryhthm_7: 7568409962461137561
-      Button ryhthm_8: -2830867181480352746
       Button ryhthm_9: 1753482063028148417
       button_rhythm_1: 6734453153771417900
       button_rhythm_2: 5646378250297347637
@@ -825,6 +822,9 @@ TextureImporter:
       button_rhythm_5: 7909431051086459841
       button_rhythm_6: -691171411705101315
       button_rhythm_7: -521187497901065136
+      circle_wind: -2830867181480352746
+      circular: 1184204539931650687
+      hit_vfx: -4639842114065500288
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

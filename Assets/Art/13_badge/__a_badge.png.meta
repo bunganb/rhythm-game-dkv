@@ -20,6 +20,12 @@ TextureImporter:
   - first:
       213: 8874835099326458387
     second: __a_badge_5
+  - first:
+      213: -4421863198653195065
+    second: __a_badge_6
+  - first:
+      213: -895312934842104888
+    second: __a_badge_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -179,10 +185,10 @@ TextureImporter:
       name: __a_badge_1
       rect:
         serializedVersion: 2
-        x: 579
-        y: 446
-        width: 504
-        height: 473
+        x: 552
+        y: 882
+        width: 271
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -201,10 +207,10 @@ TextureImporter:
       name: __a_badge_2
       rect:
         serializedVersion: 2
-        x: 1157
-        y: 430
-        width: 505
-        height: 472
+        x: 962
+        y: 877
+        width: 271
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,10 +251,10 @@ TextureImporter:
       name: __a_badge_4
       rect:
         serializedVersion: 2
-        x: 143
-        y: 453
-        width: 116
-        height: 126
+        x: 518
+        y: 357
+        width: 353
+        height: 488
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -267,6 +273,50 @@ TextureImporter:
       name: __a_badge_5
       rect:
         serializedVersion: 2
+        x: 931
+        y: 347
+        width: 352
+        height: 488
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31aa58f708fb92b70800000000000000
+      internalID: 8874835099326458387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_badge_6
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 453
+        width: 116
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7cc57ee49d262a2c0800000000000000
+      internalID: -4421863198653195065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: __a_badge_7
+      rect:
+        serializedVersion: 2
         x: 290
         y: 455
         width: 116
@@ -279,8 +329,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 31aa58f708fb92b70800000000000000
-      internalID: 8874835099326458387
+      spriteID: 8c38ceb11a53393f0800000000000000
+      internalID: -895312934842104888
       vertices: []
       indices: 
       edges: []
@@ -305,6 +355,8 @@ TextureImporter:
       __a_badge_3: -8922724523401391549
       __a_badge_4: 7489604894972640500
       __a_badge_5: 8874835099326458387
+      __a_badge_6: -4421863198653195065
+      __a_badge_7: -895312934842104888
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -15,8 +15,8 @@ MonoBehaviour:
   songId: teye_sosbud_easy
   title: Teye Sosbud
   difficulty: Easy
-  audioClip: {fileID: 8300000, guid: 62e022acd2cd69644a7e2c2ee407fbcd, type: 3}
+  audioClip: {fileID: 8300000, guid: 365b4cd1a5c4ad845ad661bbf74e283f, type: 3}
   chartJson: {fileID: 4900000, guid: 39c0e2c14274c4a4da79abce252ba093, type: 3}
   bpm: 120
-  chartAudioOffset: 0
+  chartAudioOffset: -2.9461904
   noteTravelDuration: 2

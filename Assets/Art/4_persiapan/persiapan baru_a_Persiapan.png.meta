@@ -1,0 +1,494 @@
+fileFormatVersion: 2
+guid: a5f2a7863caa2d74a963d24e1cb6e239
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3978450581023994716
+    second: persiapan baru_a_Persiapan_0
+  - first:
+      213: -4161308473106721378
+    second: persiapan baru_a_Persiapan_1
+  - first:
+      213: 4610987615538282917
+    second: persiapan baru_a_Persiapan_2
+  - first:
+      213: 8297866284397916376
+    second: persiapan baru_a_Persiapan_3
+  - first:
+      213: -2370641032683095191
+    second: persiapan baru_a_Persiapan_4
+  - first:
+      213: 278597069870446779
+    second: persiapan baru_a_Persiapan_5
+  - first:
+      213: 2370638097257984767
+    second: persiapan baru_a_Persiapan_6
+  - first:
+      213: -592438241548048990
+    second: persiapan baru_a_Persiapan_7
+  - first:
+      213: 3881138887017100329
+    second: persiapan baru_a_Persiapan_8
+  - first:
+      213: 6386789419243435196
+    second: persiapan baru_a_Persiapan_9
+  - first:
+      213: 2367688046281419341
+    second: persiapan baru_a_Persiapan_10
+  - first:
+      213: 8369004338058304249
+    second: persiapan baru_a_Persiapan_11
+  - first:
+      213: -1279545371841806321
+    second: persiapan baru_a_Persiapan_12
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_0
+      rect:
+        serializedVersion: 2
+        x: 89
+        y: 22
+        width: 549
+        height: 1166
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4ac4e997644b9c8c0800000000000000
+      internalID: -3978450581023994716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_1
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 789
+        width: 551
+        height: 370
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9596a3cdff0046c0800000000000000
+      internalID: -4161308473106721378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_2
+      rect:
+        serializedVersion: 2
+        x: 1479
+        y: 1094
+        width: 371
+        height: 77
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a182e76ec48dff30800000000000000
+      internalID: 4610987615538282917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_3
+      rect:
+        serializedVersion: 2
+        x: 1479
+        y: 984
+        width: 371
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d07a33fb61f72370800000000000000
+      internalID: 8297866284397916376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_4
+      rect:
+        serializedVersion: 2
+        x: 1479
+        y: 860
+        width: 371
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96b75fc7a8ac91fd0800000000000000
+      internalID: -2370641032683095191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_5
+      rect:
+        serializedVersion: 2
+        x: 1479
+        y: 740
+        width: 371
+        height: 76
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb8b7191f86cdd300800000000000000
+      internalID: 278597069870446779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_6
+      rect:
+        serializedVersion: 2
+        x: 1269
+        y: 580
+        width: 554
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff2f11e0ac236e020800000000000000
+      internalID: 2370638097257984767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_7
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 189
+        width: 551
+        height: 370
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a5eb25ee8c37c7f0800000000000000
+      internalID: -592438241548048990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_8
+      rect:
+        serializedVersion: 2
+        x: 1368
+        y: 407
+        width: 32
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 924fb9c21439cd530800000000000000
+      internalID: 3881138887017100329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_9
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 380
+        width: 149
+        height: 109
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb47a3d532f62a850800000000000000
+      internalID: 6386789419243435196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_10
+      rect:
+        serializedVersion: 2
+        x: 1327
+        y: 202
+        width: 308
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4aea89cbb7bbd020800000000000000
+      internalID: 2367688046281419341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_11
+      rect:
+        serializedVersion: 2
+        x: 1406
+        y: 50
+        width: 149
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9fa1ba5ca1da42470800000000000000
+      internalID: 8369004338058304249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: persiapan baru_a_Persiapan_12
+      rect:
+        serializedVersion: 2
+        x: 1564
+        y: 93
+        width: 32
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f00cf5d73442e3ee0800000000000000
+      internalID: -1279545371841806321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 98c87c47a26a0ef42b7cd1ac32703042
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      persiapan baru_a_Persiapan_0: -3978450581023994716
+      persiapan baru_a_Persiapan_1: -4161308473106721378
+      persiapan baru_a_Persiapan_10: 2367688046281419341
+      persiapan baru_a_Persiapan_11: 8369004338058304249
+      persiapan baru_a_Persiapan_12: -1279545371841806321
+      persiapan baru_a_Persiapan_2: 4610987615538282917
+      persiapan baru_a_Persiapan_3: 8297866284397916376
+      persiapan baru_a_Persiapan_4: -2370641032683095191
+      persiapan baru_a_Persiapan_5: 278597069870446779
+      persiapan baru_a_Persiapan_6: 2370638097257984767
+      persiapan baru_a_Persiapan_7: -592438241548048990
+      persiapan baru_a_Persiapan_8: 3881138887017100329
+      persiapan baru_a_Persiapan_9: 6386789419243435196
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

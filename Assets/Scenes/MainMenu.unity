@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 171896138}
   - component: {fileID: 171896137}
   m_Layer: 0
-  m_Name: song-2
+  m_Name: song-hard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -629,7 +629,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 8027209555284748028, guid: 8f7e6793288a80d48a539a83a9573fb2, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 8027209555284748028, guid: 8f7e6793288a80d48a539a83a9573fb2, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -848,7 +848,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &271538373
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1457,6 +1457,32 @@ MonoBehaviour:
   missVoice: {fileID: 0}
   sfxVolume: 0.7
   missVoiceCooldown: 1.25
+  gameplayStageMode: 0
+  gameplayHudRoot: {fileID: 0}
+  rhythmNoteSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  pekingNoteSounds:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  saronNoteSounds:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   safeRoot: {fileID: 0}
   menuPage: {fileID: 0}
   songsPage: {fileID: 0}
@@ -2625,7 +2651,7 @@ GameObject:
   - component: {fileID: 968994221}
   - component: {fileID: 968994220}
   m_Layer: 0
-  m_Name: song-1
+  m_Name: song-easy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2681,7 +2707,7 @@ MonoBehaviour:
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 6006754618010536469, guid: 8f7e6793288a80d48a539a83a9573fb2, type: 3}
-    m_SelectedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 6006754618010536469, guid: 8f7e6793288a80d48a539a83a9573fb2, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
